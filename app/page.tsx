@@ -13,6 +13,7 @@ import { AuthService } from "@/lib/auth"
 import { SheetsService } from "@/lib/sheets"
 import { LanguageProvider } from "@/contexts/LanguageContext"
 import { LanguageSelector } from "@/components/language-selector"
+import { ProfileView } from "@/components/profile-view"
 
 type UserRole = "employee" | "manager" | "hr" | "office_manager"
 type Page = "profile" | "matches" | "calendar" | "notifications" | "admin"
@@ -30,7 +31,7 @@ export default function OfficePulseMatch() {
       const user = AuthService.getCurrentUser()
       if (user) {
         setIsAuthenticated(true)
-        setUserRole(user.role)
+        setUserRole(user.role as UserRole)
 
         // Check if profile is complete for ALL users
         const profile = await SheetsService.getProfile(user.email)
@@ -53,9 +54,9 @@ export default function OfficePulseMatch() {
     checkAuth()
   }, [])
 
-  const handleLogin = (role: UserRole) => {
+  const handleLogin = (role: string) => {
     setIsAuthenticated(true)
-    setUserRole(role)
+    setUserRole(role as UserRole)
     // Tous les rôles commencent par créer un profil
     setCurrentPage("profile")
   }
@@ -77,6 +78,10 @@ export default function OfficePulseMatch() {
     setCurrentPage("profile")
   }
 
+  const handlePageChange = (page: string) => {
+    setCurrentPage(page as Page)
+  }
+
   const renderPage = () => {
     // Si le profil n'est pas complet, montrer la création de profil pour tous
     if (!isProfileComplete && currentPage === "profile") {
@@ -85,7 +90,7 @@ export default function OfficePulseMatch() {
 
     switch (currentPage) {
       case "profile":
-        return <ProfileCreation onComplete={handleProfileComplete} />
+        return isProfileComplete ? <ProfileView /> : <ProfileCreation onComplete={handleProfileComplete} />
       case "matches":
         return <MatchCarousel />
       case "calendar":
@@ -93,21 +98,36 @@ export default function OfficePulseMatch() {
       case "notifications":
         return <SlackNotifications />
       case "admin":
-        return <AdminDashboard userRole={userRole} />
+        // Convertir le type pour AdminDashboard
+        const adminRole = userRole === "office_manager" ? "office-manager" : userRole as "manager" | "hr"
+        return <AdminDashboard userRole={adminRole} />
       default:
-        return userRole === "employee" ? <MatchCarousel /> : <AdminDashboard userRole={userRole} />
+        if (userRole === "employee") {
+          return <MatchCarousel />
+        } else {
+          const defaultAdminRole = userRole === "office_manager" ? "office-manager" : userRole as "manager" | "hr"
+          return <AdminDashboard userRole={defaultAdminRole} />
+        }
     }
   }
 
   if (isLoading) {
     return (
       <LanguageProvider>
-        <div className="min-h-screen bg-jungle-background flex items-center justify-center">
+        <div className="min-h-screen jungle-gradient-bg flex items-center justify-center">
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-            className="w-8 h-8 border-2 border-jungle-accent border-t-transparent rounded-full"
-          />
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
+          >
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+              className="w-12 h-12 border-3 border-jungle-yellow border-t-transparent rounded-full mx-auto mb-4"
+            />
+            <p className="text-jungle-gray font-body">Loading...</p>
+          </motion.div>
         </div>
       </LanguageProvider>
     )
@@ -123,21 +143,31 @@ export default function OfficePulseMatch() {
 
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-jungle-background text-jungle-textLight">
+      <div className="min-h-screen jungle-gradient-bg text-jungle-gray">
         {/* Background Effects */}
-        <div className="fixed inset-0 bg-gradient-to-br from-jungle-accent/5 via-transparent to-jungle-green/5 pointer-events-none" />
-        <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,200,87,0.1),transparent_50%)] pointer-events-none" />
+        <div className="fixed inset-0 bg-gradient-to-br from-jungle-yellow/8 via-transparent to-jungle-gray/8 pointer-events-none" />
+        <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,205,0,0.12),transparent_50%)] pointer-events-none" />
+        
+        {/* Decorative elements */}
+        <div className="fixed top-20 right-20 w-40 h-40 bg-jungle-yellow/5 rounded-full blur-3xl floating-element" />
+        <div className="fixed bottom-20 left-20 w-32 h-32 bg-jungle-gray/5 rounded-full blur-2xl floating-element" style={{ animationDelay: '2s' }} />
 
         {/* Language Selector - Always visible */}
         <div className="fixed top-4 right-4 z-50">
-          <LanguageSelector />
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <LanguageSelector />
+          </motion.div>
         </div>
 
         {/* Navigation - only show when profile is complete */}
         {isProfileComplete && (
           <Navigation
             currentPage={currentPage}
-            onPageChange={setCurrentPage}
+            onPageChange={handlePageChange}
             userRole={userRole}
             onLogout={handleLogout}
           />

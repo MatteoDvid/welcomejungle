@@ -1,28 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 15 15 15;
-    --foreground: 255 255 255;
-    --card: 24 24 27;
-    --card-foreground: 255 255 255;
-    --popover: 24 24 27;
-    --popover-foreground: 255 255 255;
-    --primary: 255 200 87;
-    --primary-foreground: 30 30 30;
-    --secondary: 58 80 107;
+    --background: 255 255 255; /* Fond blanc */
+    --foreground: 88 88 88; /* Texte gris foncé */
+    --card: 255 255 255; /* Cartes blanches */
+    --card-foreground: 88 88 88; /* Texte des cartes en gris */
+    --popover: 255 255 255;
+    --popover-foreground: 88 88 88;
+    --primary: 255 205 0; /* #FFCD00 Welcome to the Jungle */
+    --primary-foreground: 88 88 88; /* #585858 Welcome to the Jungle */
+    --secondary: 88 88 88; /* #585858 Welcome to the Jungle */
     --secondary-foreground: 255 255 255;
-    --muted: 39 39 42;
-    --muted-foreground: 161 161 170;
-    --accent: 42 157 143;
-    --accent-foreground: 255 255 255;
+    --muted: 248 248 248; /* Gris très clair */
+    --muted-foreground: 88 88 88;
+    --accent: 255 205 0; /* #FFCD00 Welcome to the Jungle */
+    --accent-foreground: 88 88 88; /* #585858 Welcome to the Jungle */
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
-    --border: 39 39 42;
-    --input: 39 39 42;
-    --ring: 255 200 87;
+    --border: 229 229 229; /* Bordures grises claires */
+    --input: 248 248 248; /* Inputs gris très clair */
+    --ring: 255 205 0; /* #FFCD00 Welcome to the Jungle */
     --radius: 0.75rem;
   }
 }
@@ -32,31 +34,110 @@
     @apply border-border;
   }
   body {
-    @apply bg-jungle-background text-jungle-textLight font-sans;
+    @apply bg-gradient-to-br from-gray-50 to-white text-jungle-gray font-work-sans;
+    background-attachment: fixed;
+  }
+  
+  /* Typographie Welcome to the Jungle */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-welcome;
+  }
+  
+  p, span, div, a, button {
+    @apply font-work-sans;
   }
 }
 
+/* Effets visuels améliorés */
 .glass-effect {
-  @apply backdrop-blur-md bg-white/10 border border-white/20;
+  @apply backdrop-blur-xl bg-white/80 border border-gray-200/50;
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.card-shadow {
+  box-shadow: 
+    0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(255, 205, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.card-shadow:hover {
+  box-shadow: 
+    0 20px 40px -4px rgba(0, 0, 0, 0.15),
+    0 8px 16px -4px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 205, 0, 0.1);
+  transform: translateY(-2px);
 }
 
 .glow-effect {
-  box-shadow: 0 0 20px rgba(255, 200, 87, 0.3);
+  box-shadow: 
+    0 0 20px rgba(255, 205, 0, 0.3),
+    0 8px 16px rgba(255, 205, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 .glow-effect:hover {
-  box-shadow: 0 0 30px rgba(255, 200, 87, 0.5);
+  box-shadow: 
+    0 0 30px rgba(255, 205, 0, 0.5),
+    0 12px 24px rgba(255, 205, 0, 0.3);
+  transform: translateY(-1px);
 }
 
 .jungle-gradient {
-  background: linear-gradient(135deg, #ffc857 0%, #2a9d8f 100%);
+  background: linear-gradient(135deg, #FFCD00 0%, #f7c500 50%, #585858 100%);
+}
+
+.jungle-gradient-bg {
+  background: linear-gradient(135deg, 
+    rgba(255, 205, 0, 0.1) 0%, 
+    rgba(255, 205, 0, 0.05) 25%,
+    rgba(248, 248, 248, 0.8) 50%,
+    rgba(88, 88, 88, 0.05) 75%,
+    rgba(88, 88, 88, 0.1) 100%);
 }
 
 .typing-effect {
   overflow: hidden;
-  border-right: 2px solid #ffc857;
+  border-right: 2px solid #FFCD00;
   white-space: nowrap;
   animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+.button-shadow {
+  box-shadow: 
+    0 4px 14px 0 rgba(255, 205, 0, 0.39),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.button-shadow:hover {
+  box-shadow: 
+    0 6px 20px 0 rgba(255, 205, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+.subtle-shadow {
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.floating-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-10px); 
+  }
 }
 
 @keyframes blink-caret {
@@ -65,11 +146,30 @@
     border-color: transparent;
   }
   50% {
-    border-color: #ffc857;
+    border-color: #FFCD00;
   }
 }
 
 @keyframes typing {
   0% { width: 0; }
   100% { width: 100%; }
+}
+
+/* Amélioration des scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFCD00;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e6b800;
 }

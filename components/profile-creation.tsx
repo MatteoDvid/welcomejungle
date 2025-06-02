@@ -144,12 +144,12 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
               >
                 👋
               </motion.div>
-              <h2 className="text-3xl font-bold text-jungle-accent mb-2">Welcome to Office Pulse!</h2>
-              <p className="text-jungle-textLight/70">Let's get you set up to connect with amazing colleagues</p>
+              <h2 className="text-3xl font-heading text-jungle-yellow mb-2">Welcome to Office Pulse!</h2>
+              <p className="text-jungle-textLight/70 font-body">Let's get you set up to connect with amazing colleagues</p>
             </div>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="name" className="text-jungle-textLight">
+                <Label htmlFor="name" className="text-jungle-textLight font-body">
                   Full Name
                 </Label>
                 <Input
@@ -157,11 +157,11 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                   value={formData.name}
                   onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
                   placeholder="Enter your full name"
-                  className="mt-1 bg-white/10 border-white/20 text-jungle-textLight placeholder:text-jungle-textLight/50"
+                  className="mt-1 bg-white/10 border-white/20 text-jungle-textLight placeholder:text-jungle-textLight/50 font-body"
                 />
               </div>
               <div>
-                <Label htmlFor="role" className="text-jungle-textLight">
+                <Label htmlFor="role" className="text-jungle-textLight font-body">
                   Role
                 </Label>
                 <Input
@@ -169,7 +169,7 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                   value={formData.role}
                   onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value }))}
                   placeholder="e.g., Product Designer, Software Engineer"
-                  className="mt-1 bg-white/10 border-white/20 text-jungle-textLight placeholder:text-jungle-textLight/50"
+                  className="mt-1 bg-white/10 border-white/20 text-jungle-textLight placeholder:text-jungle-textLight/50 font-body"
                 />
               </div>
             </div>
@@ -192,8 +192,8 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
               >
                 🏢
               </motion.div>
-              <h2 className="text-3xl font-bold text-jungle-accent mb-2">When are you in the office?</h2>
-              <p className="text-jungle-textLight/70">Select the days you're typically in the office</p>
+              <h2 className="text-3xl font-heading text-jungle-yellow mb-2">When are you in the office?</h2>
+              <p className="text-jungle-textLight/70 font-body">Select the days you're typically in the office</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               {days.map((day, index) => (
@@ -202,15 +202,15 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button
                     variant={formData.officeDays.includes(day.id) ? "default" : "outline"}
-                    className={`w-full h-24 flex flex-col items-center justify-center ${
+                    className={`w-full h-24 flex flex-col items-center justify-center transition-all ${
                       formData.officeDays.includes(day.id)
-                        ? "bg-jungle-accent text-jungle-textDark glow-effect"
-                        : "border-white/20 hover:bg-white/10 text-jungle-textLight"
+                        ? "bg-jungle-yellow text-jungle-gray button-shadow"
+                        : "border-gray-200 hover:bg-gray-50 hover:border-jungle-yellow/50 text-jungle-gray subtle-shadow"
                     }`}
                     onClick={() => toggleSelection("officeDays", day.id)}
                   >
@@ -239,8 +239,8 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
               >
                 🌟
               </motion.div>
-              <h2 className="text-3xl font-bold text-jungle-accent mb-2">What are you passionate about?</h2>
-              <p className="text-jungle-textLight/70">Select your interests to find like-minded colleagues</p>
+              <h2 className="text-3xl font-heading text-jungle-yellow mb-2">What are you passionate about?</h2>
+              <p className="text-jungle-textLight/70 font-body">Select your interests to find like-minded colleagues</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {interests.map((interest, index) => (
@@ -249,15 +249,15 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.05 }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button
                     variant={formData.interests.includes(interest.id) ? "default" : "outline"}
-                    className={`w-full h-16 flex flex-col items-center justify-center ${
+                    className={`w-full h-16 flex flex-col items-center justify-center transition-all ${
                       formData.interests.includes(interest.id)
-                        ? "bg-jungle-accent text-jungle-textDark glow-effect"
-                        : "border-white/20 hover:bg-white/10 text-jungle-textLight"
+                        ? "bg-jungle-yellow text-jungle-gray button-shadow"
+                        : "border-gray-200 hover:bg-gray-50 hover:border-jungle-yellow/50 text-jungle-gray subtle-shadow"
                     }`}
                     onClick={() => toggleSelection("interests", interest.id)}
                   >
@@ -286,8 +286,8 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
               >
                 🤝
               </motion.div>
-              <h2 className="text-3xl font-bold text-jungle-accent mb-2">How do you like to connect?</h2>
-              <p className="text-jungle-textLight/70">Choose your preferred activities for meeting colleagues</p>
+              <h2 className="text-3xl font-heading text-jungle-yellow mb-2">How do you like to connect?</h2>
+              <p className="text-jungle-textLight/70 font-body">Choose your preferred activities for meeting colleagues</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {activities.map((activity, index) => (
@@ -296,15 +296,15 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button
                     variant={formData.activities.includes(activity.id) ? "default" : "outline"}
-                    className={`w-full h-20 flex flex-col items-center justify-center ${
+                    className={`w-full h-20 flex flex-col items-center justify-center transition-all ${
                       formData.activities.includes(activity.id)
-                        ? "bg-jungle-accent text-jungle-textDark glow-effect"
-                        : "border-white/20 hover:bg-white/10 text-jungle-textLight"
+                        ? "bg-jungle-yellow text-jungle-gray button-shadow"
+                        : "border-gray-200 hover:bg-gray-50 hover:border-jungle-yellow/50 text-jungle-gray subtle-shadow"
                     }`}
                     onClick={() => toggleSelection("activities", activity.id)}
                   >
@@ -333,14 +333,14 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
               >
                 📸
               </motion.div>
-              <h2 className="text-3xl font-bold text-jungle-accent mb-2">Add your photo</h2>
-              <p className="text-jungle-textLight/70">Help colleagues recognize you around the office</p>
+              <h2 className="text-3xl font-heading text-jungle-yellow mb-2">Add your photo</h2>
+              <p className="text-jungle-textLight/70 font-body">Help colleagues recognize you around the office</p>
             </div>
             <div className="flex flex-col items-center space-y-6">
               <div className="relative">
-                <Avatar className="w-32 h-32 ring-4 ring-jungle-accent/50">
+                <Avatar className="w-32 h-32 ring-4 ring-jungle-yellow/50">
                   <AvatarImage src={formData.photo ? URL.createObjectURL(formData.photo) : undefined} />
-                  <AvatarFallback className="bg-jungle-accent text-jungle-textDark text-4xl">
+                  <AvatarFallback className="bg-jungle-yellow text-jungle-gray text-4xl font-body">
                     {formData.name
                       .split(" ")
                       .map((n) => n[0])
@@ -357,7 +357,7 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
               </div>
               <Button
                 variant="outline"
-                className="border-jungle-accent text-jungle-accent hover:bg-jungle-accent hover:text-jungle-textDark"
+                className="border-jungle-yellow text-jungle-yellow hover:bg-jungle-yellow hover:text-jungle-gray font-body"
                 onClick={() => {
                   const input = document.createElement("input")
                   input.type = "file"
@@ -394,18 +394,18 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
               >
                 ✨
               </motion.div>
-              <h2 className="text-3xl font-bold text-jungle-accent mb-2">Generate your bio</h2>
-              <p className="text-jungle-textLight/70">Let AI create a fun intro based on your interests</p>
+              <h2 className="text-3xl font-heading text-jungle-yellow mb-2">Generate your bio</h2>
+              <p className="text-jungle-textLight/70 font-body">Let AI create a fun intro based on your interests</p>
             </div>
             <div className="space-y-6">
               {formData.bio ? (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-6 rounded-lg glass-effect border border-jungle-accent/30"
+                  className="p-6 rounded-lg glass-effect border border-jungle-yellow/30"
                 >
                   <motion.p
-                    className={`text-lg text-center ${bioGenerated ? "typing-effect" : ""}`}
+                    className={`text-lg text-center font-body text-jungle-gray ${bioGenerated ? "typing-effect" : ""}`}
                     initial={{ width: 0 }}
                     animate={{ width: bioGenerated ? "100%" : "auto" }}
                     transition={{ duration: 2 }}
@@ -418,7 +418,7 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                   <Button
                     onClick={generateBio}
                     disabled={isGeneratingBio || formData.interests.length === 0}
-                    className="bg-jungle-accent text-jungle-textDark hover:bg-jungle-accent/90 glow-effect"
+                    className="bg-jungle-yellow text-jungle-gray hover:bg-jungle-yellow/90 glow-effect font-body"
                     size="lg"
                   >
                     {isGeneratingBio ? (
@@ -444,7 +444,7 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                       generateBio()
                     }}
                     disabled={isGeneratingBio}
-                    className="border-jungle-accent text-jungle-accent hover:bg-jungle-accent hover:text-jungle-textDark"
+                    className="border-jungle-yellow text-jungle-yellow hover:bg-jungle-yellow hover:text-jungle-gray font-body"
                   >
                     <Wand2 className="w-4 h-4 mr-2" />
                     Generate Another
@@ -480,55 +480,81 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-jungle-background">
+    <div className="min-h-screen flex items-center justify-center p-4 jungle-gradient-bg">
       {/* Background Effects */}
-      <div className="fixed inset-0 bg-gradient-to-br from-jungle-accent/5 via-transparent to-jungle-green/5 pointer-events-none" />
+      <div className="fixed inset-0 bg-gradient-to-br from-jungle-yellow/8 via-transparent to-jungle-gray/8 pointer-events-none" />
+      
+      {/* Decorative elements */}
+      <div className="fixed top-20 left-20 w-32 h-32 bg-jungle-yellow/5 rounded-full blur-2xl" />
+      <div className="fixed bottom-20 right-20 w-24 h-24 bg-jungle-gray/5 rounded-full blur-xl" />
 
-      <Card className="w-full max-w-2xl glass-effect border-white/20">
-        <CardHeader>
-          <div className="flex items-center justify-between mb-4">
-            <CardTitle className="text-sm text-jungle-textLight/70">
-              Step {currentStep + 1} of {steps.length}: {steps[currentStep]}
-            </CardTitle>
-            <span className="text-sm text-jungle-accent font-medium">{Math.round(progress)}%</span>
-          </div>
-          <Progress value={progress} className="h-2" />
-        </CardHeader>
-        <CardContent className="space-y-8">
-          <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <Card className="w-full max-w-2xl glass-effect card-shadow">
+          <CardHeader>
+            <div className="flex items-center justify-between mb-4">
+              <CardTitle className="text-sm text-jungle-gray/70 font-body font-medium">
+                Step {currentStep + 1} of {steps.length}: {steps[currentStep]}
+              </CardTitle>
+              <span className="text-sm text-jungle-yellow font-semibold font-body drop-shadow-sm">{Math.round(progress)}%</span>
+            </div>
+            <div className="relative">
+              <Progress value={progress} className="h-3 bg-gray-100 rounded-full overflow-hidden" />
+              <div 
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-jungle-yellow to-jungle-yellow/80 rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-8">
+            <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
 
-          <div className="flex justify-between pt-6">
-            <Button
-              variant="outline"
-              onClick={handleBack}
-              disabled={currentStep === 0}
-              className="border-white/20 hover:bg-white/10 text-jungle-textLight"
-            >
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-            <Button
-              onClick={handleNext}
-              disabled={!canProceed() || isSaving}
-              className="bg-jungle-accent text-jungle-textDark hover:bg-jungle-accent/90 glow-effect"
-            >
-              {isSaving ? (
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+            <div className="flex justify-between pt-6 border-t border-gray-200">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  variant="outline"
+                  onClick={handleBack}
+                  disabled={currentStep === 0}
+                  className="border-gray-200 hover:bg-gray-50 text-jungle-gray font-body disabled:opacity-50 subtle-shadow"
                 >
-                  <Sparkles className="w-4 h-4 mr-2" />
-                </motion.div>
-              ) : currentStep === steps.length - 1 ? (
-                "Complete Setup"
-              ) : (
-                "Next"
-              )}
-              {!isSaving && <ChevronRight className="w-4 h-4 ml-2" />}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+                  <ChevronLeft className="w-4 h-4 mr-2" />
+                  Back
+                </Button>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  onClick={handleNext}
+                  disabled={!canProceed() || isSaving}
+                  className="bg-jungle-yellow text-jungle-gray hover:bg-jungle-yellow/90 button-shadow font-body disabled:opacity-50"
+                >
+                  {isSaving ? (
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                    >
+                      <Sparkles className="w-4 h-4 mr-2" />
+                    </motion.div>
+                  ) : currentStep === steps.length - 1 ? (
+                    "Complete Setup"
+                  ) : (
+                    "Next"
+                  )}
+                  {!isSaving && <ChevronRight className="w-4 h-4 ml-2" />}
+                </Button>
+              </motion.div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   )
 }

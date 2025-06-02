@@ -19,6 +19,12 @@ const config: Config = {
       },
     },
     extend: {
+      fontFamily: {
+        'welcome': ['Welcome font', 'sans-serif'],
+        'work-sans': ['Work Sans', 'sans-serif'],
+        'heading': ['Welcome font', 'sans-serif'],
+        'body': ['Work Sans', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -26,25 +32,27 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         jungle: {
-          background: "#0f0f0f",
-          accent: "#ffc857",
-          blue: "#3a506b",
+          background: "#ffffff",
+          accent: "#FFCD00",
+          blue: "#585858",
           green: "#2a9d8f",
           cream: "#f9f6f1",
-          textDark: "#1e1e1e",
-          textLight: "#ffffff",
+          textDark: "#585858",
+          textLight: "#585858",
+          yellow: "#FFCD00",
+          gray: "#585858",
         },
         primary: {
-          DEFAULT: "#ffc857",
-          foreground: "#1e1e1e",
+          DEFAULT: "#FFCD00",
+          foreground: "#585858",
         },
         secondary: {
-          DEFAULT: "#3a506b",
+          DEFAULT: "#585858",
           foreground: "#ffffff",
         },
         accent: {
-          DEFAULT: "#2a9d8f",
-          foreground: "#ffffff",
+          DEFAULT: "#FFCD00",
+          foreground: "#585858",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -90,8 +98,8 @@ const config: Config = {
           "100%": { transform: "translateX(0)" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(255, 200, 87, 0.3)" },
-          "50%": { boxShadow: "0 0 40px rgba(255, 200, 87, 0.6)" },
+          "0%, 100%": { boxShadow: "0 0 20px rgba(255, 205, 0, 0.3)" },
+          "50%": { boxShadow: "0 0 40px rgba(255, 205, 0, 0.6)" },
         },
         typing: {
           "0%": { width: "0" },

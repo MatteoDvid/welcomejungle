@@ -6,6 +6,8 @@ import { User, Calendar, MessageSquare, Bell, Users, BarChart3, Shield, LogOut, 
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AuthService } from "@/lib/auth"
+import { useLanguage } from "@/contexts/LanguageContext"
+import Image from "next/image"
 
 interface NavigationProps {
   currentPage: string
@@ -15,20 +17,21 @@ interface NavigationProps {
 }
 
 export function Navigation({ currentPage, onPageChange, userRole, onLogout }: NavigationProps) {
+  const { t, language } = useLanguage()
   const [isExpanded, setIsExpanded] = useState(false)
   const user = AuthService.getCurrentUser()
 
   const employeePages = [
-    { id: "matches", label: "Matches", icon: MessageSquare, emoji: "💫" },
-    { id: "calendar", label: "Calendar", icon: Calendar, emoji: "📅" },
-    { id: "notifications", label: "Notifications", icon: Bell, emoji: "🔔" },
-    { id: "profile", label: "Profile", icon: User, emoji: "👤" },
+    { id: "matches", label: t.nav.matches, icon: MessageSquare, emoji: "💫" },
+    { id: "calendar", label: t.nav.calendar, icon: Calendar, emoji: "📅" },
+    { id: "notifications", label: t.nav.notifications, icon: Bell, emoji: "🔔" },
+    { id: "profile", label: t.nav.profile, icon: User, emoji: "👤" },
   ]
 
   const adminPages = [
-    { id: "dashboard", label: "Dashboard", icon: BarChart3, emoji: "📊" },
+    { id: "dashboard", label: t.nav.admin, icon: BarChart3, emoji: "📊" },
     { id: "team", label: "Team", icon: Users, emoji: "👥" },
-    { id: "admin", label: "Admin", icon: Shield, emoji: "🛡️" },
+    { id: "admin", label: t.nav.admin, icon: Shield, emoji: "🛡️" },
   ]
 
   const pages = userRole === "employee" ? employeePages : adminPages
@@ -36,11 +39,11 @@ export function Navigation({ currentPage, onPageChange, userRole, onLogout }: Na
   const getRoleTitle = () => {
     switch (userRole) {
       case "manager":
-        return "Manager Dashboard"
+        return language === 'fr' ? "Tableau de bord Manager" : "Manager Dashboard"
       case "hr":
-        return "HR Dashboard"
+        return language === 'fr' ? "Tableau de bord RH" : "HR Dashboard"
       case "office_manager":
-        return "Office Manager"
+        return language === 'fr' ? "Responsable de bureau" : "Office Manager"
       default:
         return "Office Pulse"
     }
@@ -57,36 +60,53 @@ export function Navigation({ currentPage, onPageChange, userRole, onLogout }: Na
         onMouseEnter={() => setIsExpanded(true)}
         onMouseLeave={() => setIsExpanded(false)}
       >
-        <div className="glass-effect h-full p-4 flex flex-col border-r border-white/20">
-          {/* Logo */}
+        <div className="glass-effect h-full p-4 flex flex-col border-r border-gray-200/50 card-shadow">
+          {/* Logo Welcome to the Jungle */}
           <motion.div
             className="flex items-center mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <div className="w-12 h-12 bg-jungle-accent rounded-xl flex items-center justify-center text-2xl">
-              <Sparkles className="w-6 h-6 text-jungle-textDark" />
-            </div>
+            <motion.div 
+              className="w-12 h-12 bg-jungle-yellow rounded-xl flex items-center justify-center button-shadow"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <div className="w-10 h-10 rounded-full bg-jungle-yellow flex items-center justify-center p-1">
+                <Image
+                  src="/Logo-Welcome-To-The-Jungle-1500x1500.png"
+                  alt="Welcome to the Jungle"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 object-contain"
+                />
+              </div>
+            </motion.div>
             <motion.div
               className="ml-3 overflow-hidden"
               animate={{ opacity: isExpanded ? 1 : 0, width: isExpanded ? "auto" : 0 }}
               transition={{ duration: 0.2 }}
             >
-              <h1 className="text-xl font-bold text-jungle-accent whitespace-nowrap">{getRoleTitle()}</h1>
+              <h1 className="text-xl font-heading text-jungle-yellow whitespace-nowrap drop-shadow-sm">{getRoleTitle()}</h1>
             </motion.div>
           </motion.div>
 
           {/* Navigation Items */}
           <nav className="flex-1 space-y-2">
             {pages.map((page) => (
-              <motion.div key={page.id} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div 
+                key={page.id} 
+                whileHover={{ scale: 1.02, x: 2 }} 
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <Button
                   variant={currentPage === page.id ? "default" : "ghost"}
-                  className={`w-full justify-start h-12 ${
+                  className={`w-full justify-start h-12 font-body transition-all ${
                     currentPage === page.id
-                      ? "bg-jungle-accent text-jungle-textDark glow-effect"
-                      : "text-jungle-textLight hover:bg-white/10"
+                      ? "bg-jungle-yellow text-jungle-gray button-shadow"
+                      : "text-jungle-gray hover:bg-gray-50 hover:text-jungle-yellow subtle-shadow"
                   }`}
                   onClick={() => onPageChange(page.id)}
                 >
@@ -105,10 +125,13 @@ export function Navigation({ currentPage, onPageChange, userRole, onLogout }: Na
 
           {/* User Profile */}
           <motion.div className="mt-auto space-y-2">
-            <motion.div className="flex items-center p-2 rounded-lg hover:bg-white/10 cursor-pointer">
-              <Avatar className="w-10 h-10 ring-2 ring-jungle-accent/50">
+            <motion.div 
+              className="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer subtle-shadow transition-all"
+              whileHover={{ scale: 1.02 }}
+            >
+              <Avatar className="w-10 h-10 ring-2 ring-jungle-yellow/50 subtle-shadow">
                 <AvatarImage src="/placeholder.svg?height=40&width=40" />
-                <AvatarFallback className="bg-jungle-accent text-jungle-textDark">
+                <AvatarFallback className="bg-jungle-yellow text-jungle-gray font-body font-semibold">
                   {user?.name
                     ?.split(" ")
                     .map((n) => n[0])
@@ -120,17 +143,21 @@ export function Navigation({ currentPage, onPageChange, userRole, onLogout }: Na
                 animate={{ opacity: isExpanded ? 1 : 0, width: isExpanded ? "auto" : 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <p className="text-sm font-medium whitespace-nowrap text-jungle-textLight">{user?.name || "User"}</p>
-                <p className="text-xs text-jungle-textLight/70 whitespace-nowrap capitalize">
+                <p className="text-sm font-medium whitespace-nowrap text-jungle-gray font-body">{user?.name || "User"}</p>
+                <p className="text-xs text-jungle-gray/70 whitespace-nowrap capitalize font-body">
                   {userRole.replace("_", " ")}
                 </p>
               </motion.div>
             </motion.div>
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div 
+              whileHover={{ scale: 1.02 }} 
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <Button
                 variant="ghost"
-                className="w-full justify-start h-10 text-red-400 hover:bg-red-500/20 hover:text-red-300"
+                className="w-full justify-start h-10 text-red-400 hover:bg-red-50 hover:text-red-500 font-body transition-all"
                 onClick={onLogout}
               >
                 <LogOut className="w-4 h-4 mr-3" />
@@ -139,7 +166,7 @@ export function Navigation({ currentPage, onPageChange, userRole, onLogout }: Na
                   animate={{ opacity: isExpanded ? 1 : 0, width: isExpanded ? "auto" : 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  Logout
+                  {t.nav.logout}
                 </motion.span>
               </Button>
             </motion.div>
@@ -154,8 +181,8 @@ export function Navigation({ currentPage, onPageChange, userRole, onLogout }: Na
             {pages.slice(0, 4).map((page) => (
               <motion.button
                 key={page.id}
-                className={`flex flex-col items-center p-2 rounded-lg ${
-                  currentPage === page.id ? "text-jungle-accent" : "text-jungle-textLight"
+                className={`flex flex-col items-center p-2 rounded-lg font-body ${
+                  currentPage === page.id ? "text-jungle-yellow" : "text-jungle-textLight"
                 }`}
                 onClick={() => onPageChange(page.id)}
                 whileTap={{ scale: 0.9 }}
