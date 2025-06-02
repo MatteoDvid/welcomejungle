@@ -1,0 +1,93 @@
+export const translations = {
+  en: {
+    nav: {
+      profile: "Profile",
+      matches: "Matches",
+      calendar: "Calendar",
+      notifications: "Notifications",
+      admin: "Admin Dashboard",
+      logout: "Logout",
+    },
+    login: {
+      title: "Welcome to Office Pulse Match",
+      subtitle: "Connect with colleagues based on interests",
+      selectRole: "Select your role to continue",
+      employee: "Employee",
+      manager: "Manager",
+      hr: "HR",
+      officeManager: "Office Manager",
+    },
+    profile: {
+      title: "Create Your Profile",
+      subtitle: "Tell us about yourself",
+      name: "Name",
+      email: "Email",
+      department: "Department",
+      interests: "Interests",
+      availability: "Availability",
+      submit: "Create Profile",
+      update: "Update Profile",
+    },
+    matches: {
+      title: "Your Matches",
+      findMatch: "Find a Match",
+      noMatches: "No matches yet",
+      matchFound: "It's a Match!",
+      viewProfile: "View Profile",
+      skip: "Skip",
+      like: "Like",
+    },
+    notifications: {
+      newMatch: "You have a new match!",
+      meetingScheduled: "Meeting scheduled with",
+      profileUpdated: "Profile updated successfully",
+    },
+  },
+  fr: {
+    nav: {
+      profile: "Profil",
+      matches: "Correspondances",
+      calendar: "Calendrier",
+      notifications: "Notifications",
+      admin: "Tableau de bord admin",
+      logout: "Déconnexion",
+    },
+    login: {
+      title: "Bienvenue sur Office Pulse Match",
+      subtitle: "Connectez-vous avec vos collègues selon vos intérêts",
+      selectRole: "Sélectionnez votre rôle pour continuer",
+      employee: "Employé",
+      manager: "Manager",
+      hr: "RH",
+      officeManager: "Responsable de bureau",
+    },
+    profile: {
+      title: "Créez votre profil",
+      subtitle: "Parlez-nous de vous",
+      name: "Nom",
+      email: "E-mail",
+      department: "Département",
+      interests: "Centres d'intérêt",
+      availability: "Disponibilité",
+      submit: "Créer le profil",
+      update: "Mettre à jour le profil",
+    },
+    matches: {
+      title: "Vos correspondances",
+      findMatch: "Trouver une correspondance",
+      noMatches: "Pas encore de correspondances",
+      matchFound: "C'est un Match !",
+      viewProfile: "Voir le profil",
+      skip: "Passer",
+      like: "Aimer",
+    },
+    notifications: {
+      newMatch: "Vous avez une nouvelle correspondance !",
+      meetingScheduled: "Réunion programmée avec",
+      profileUpdated: "Profil mis à jour avec succès",
+    },
+  },
+};
+
+export type Language = keyof typeof translations;
+export type TranslationKeys = typeof translations.en; 
