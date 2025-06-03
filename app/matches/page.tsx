@@ -18,15 +18,13 @@ function MatchesContent() {
       router.push("/login")
       return
     }
-
-    // Only employees can access matches after profile creation
-    if (!isLoading && user && user.role !== "Employé") {
+    // Ensure user is defined before accessing user.role
+    if (!isLoading && user && user.role !== "employee") {
       const route = {
-        "Manager": "/dashboard-manager",
-        "RH": "/dashboard-rh",
-        "Office Manager": "/dashboard-office"
+        "manager": "/dashboard-manager",
+        "hr": "/dashboard-rh",
+        "office_manager": "/dashboard-office",
       }[user.role] || "/login"
-      
       router.push(route)
     }
   }, [user, isLoading, router])
@@ -42,11 +40,24 @@ function MatchesContent() {
     )
   }
 
-  if (!user || user.role !== "Employé") {
-    return null // Will redirect
+  // Ensure user is defined before checking role for rendering MatchCarousel
+  if (!user || user.role !== "employee") {
+    // This log helps confirm if we are exiting early due to user/role issues
+    console.log('MatchesContent: Exiting early. User:', user, 'IsLoading:', isLoading);
+    return null // Will redirect or show nothing if redirect already happened
   }
 
-  return <MatchCarousel />
+  // Logic for userEmail with placeholder
+  let userEmail = user.email; // Attempt to get the email
+  console.log('[MatchesPage] Email from AuthContext:', userEmail); // Log initial email value
+
+  if (!userEmail) {
+    console.warn("[MatchesPage] User email is undefined. Using placeholder 'emma@jungle.com' for demo.");
+    userEmail = "emma@jungle.com"; // Placeholder for demo
+  }
+  console.log('[MatchesPage] Final userEmail to be passed to MatchCarousel:', userEmail);
+
+  return <MatchCarousel userEmail={userEmail} />;
 }
 
 export default function MatchesPage() {
