@@ -1,5 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { GoogleSheetsService, AddRowParams } from '@/lib/sheets'
+
+// Définition locale pour AddRowParams basé sur l'utilisation
+interface AddRowParams {
+  sheetId: string;
+  tab: string;
+  values: {
+    Email: string;
+    Prénom: string;
+    Nom: string;
+    Rôle: string;
+    Timestamp: string; // Assumant que Timestamp est toujours fourni ou géré
+    "Thèmes choisis": string[]; // Assumant que "Thèmes choisis" sont toujours fournis ou gérés
+    [key: string]: string | number | boolean | string[] | undefined; // Remplacement de any par un type plus spécifique
+  };
+}
 
 export async function POST(request: NextRequest) {
   try {

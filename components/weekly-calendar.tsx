@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Switch } from "@/components/ui/switch"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -16,7 +16,6 @@ import {
   Calendar as CalendarIcon,
   Users,
   Filter,
-  Settings,
   UserCheck,
   Building2,
   Home,
@@ -53,7 +52,7 @@ export function WeeklyCalendar() {
   const [presences, setPresences] = useState<PresenceEvent[]>([])
   const [viewMode, setViewMode] = useState<'week' | 'day'>('week')
   const [selectedDate, setSelectedDate] = useState(new Date())
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([])
+  const [selectedGroups, /* setSelectedGroups */] = useState<string[]>([]) // Commented out setSelectedGroups
   const [showOnlyMyGroups, setShowOnlyMyGroups] = useState(false)
   const [userPresenceToday, setUserPresenceToday] = useState<'present' | 'remote' | 'absent'>('absent')
   const [isConnected, setIsConnected] = useState(false)
@@ -290,7 +289,7 @@ export function WeeklyCalendar() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="force-white-page-override">
       {/* Header */}
       <div className="border-b border-gray-200 bg-white">
         <div className="flex items-center justify-between max-w-7xl mx-auto p-4">
@@ -310,7 +309,7 @@ export function WeeklyCalendar() {
           
           <div className="flex items-center gap-4">
             {/* Sélecteur de langue */}
-            <Select value={language} onValueChange={(value: 'fr' | 'en') => setLanguage(value)}>
+            <Select value={language} onValueChange={(value: string) => setLanguage(value as 'fr' | 'en')}>
               <SelectTrigger className="w-32">
                 <Globe className="w-4 h-4 mr-2" />
                 <SelectValue />
@@ -349,7 +348,7 @@ export function WeeklyCalendar() {
         {/* Tabs et filtres */}
         <div className="border-t border-gray-100 px-4 py-2 max-w-7xl mx-auto">
           <div className="flex items-center justify-between">
-            <Tabs value={viewMode} onValueChange={(value: 'week' | 'day') => setViewMode(value)}>
+            <Tabs value={viewMode} onValueChange={(value: string) => setViewMode(value as 'week' | 'day')}>
               <TabsList className="grid w-48 grid-cols-2">
                 <TabsTrigger value="week">{t.weekView}</TabsTrigger>
                 <TabsTrigger value="day">{t.dayView}</TabsTrigger>
@@ -457,7 +456,7 @@ export function WeeklyCalendar() {
                     </div>
                   ))}
                   {getPresentUsers().length === 0 && (
-                    <p className="text-xs text-gray-500">Aucune présence aujourd'hui</p>
+                    <p className="text-xs text-gray-500">Aucune présence aujourd&apos;hui</p>
                   )}
                 </div>
               </div>

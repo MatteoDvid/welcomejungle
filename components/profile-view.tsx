@@ -5,12 +5,12 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
 import { Edit3, Save, X, Upload, Sparkles, Wand2 } from "lucide-react"
-import { SheetsService } from "@/lib/sheets"
+// import { SheetsService } from "@/lib/sheets"
 import { OpenAIService } from "@/lib/openai"
 import { AuthService } from "@/lib/auth"
 import { useLanguage } from "@/contexts/LanguageContext"
@@ -43,6 +43,7 @@ export function ProfileView() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [isGeneratingBio, setIsGeneratingBio] = useState(false)
+  // const [error, setError] = useState<string | null>(null); // Pour une future gestion d'erreur UI
 
   const interests = [
     { id: "tech", label: "Tech", emoji: "💻" },
@@ -86,14 +87,18 @@ export function ProfileView() {
     try {
       const user = AuthService.getCurrentUser()
       if (user) {
-        const profileData = await SheetsService.getProfile(user.email)
-        if (profileData) {
-          setProfile(profileData)
-          setEditForm(profileData)
-        }
+        // const profileData = await SheetsService.getProfile(user.email)
+        // if (profileData) {
+        //   setProfile(profileData)
+        //   setEditForm(profileData)
+        // }
+        console.log("Profile loading commented out. User:", user.email);
+        // To prevent UI from staying in loading state indefinitely if no profile is found/loaded:
+        // We can set profile to null or a default state to show "No profile found" or similar.
+        setProfile(null); 
       }
     } catch (error) {
-      console.error("Failed to load profile:", error)
+      console.error("Failed to load profile (actual loading is commented out):", error)
     } finally {
       setIsLoading(false)
     }
@@ -114,17 +119,45 @@ export function ProfileView() {
   }
 
   const handleSave = async () => {
-    setIsSaving(true)
+    setIsSaving(true);
+    // setError(null); // Pour une future gestion d'erreur UI
     try {
-      await SheetsService.saveProfile(editForm)
-      setProfile(editForm)
-      setIsEditing(false)
-    } catch (error) {
-      console.error("Failed to save profile:", error)
+      if (!editForm.email) {
+        console.error("Email is missing in editForm. Cannot save profile.");
+        throw new Error("Email is missing. Cannot save profile.");
+      }
+      
+      // Exclure 'photo' des données à sauvegarder
+      // La variable _photo est préfixée pour indiquer qu'elle n'est pas utilisée par la suite.
+      const { photo: _photo, ...profileDataToSave } = editForm;
+
+      const response = await fetch('/api/save-profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(profileDataToSave),
+      });
+
+      if (!response.ok) {
+        const errorResult = await response.json();
+        console.error("API Error during save:", errorResult.error || `Failed to save profile: ${response.statusText}`);
+        throw new Error(errorResult.error || `Failed to save profile: ${response.statusText}`);
+      }
+
+      // const result = await response.json(); // Décommenter si le résultat de l'API est utile
+      // console.log('Profile updated successfully via API:', result);
+
+      setProfile(editForm); // Mettre à jour l'état local du profil avec les données sauvegardées
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Failed to save profile (catch block):", err);
+      // setError(err instanceof Error ? err.message : "An unknown error occurred during save.");
+      // Gérer l'erreur (par exemple, afficher un message à l'utilisateur)
     } finally {
-      setIsSaving(false)
+      setIsSaving(false);
     }
-  }
+  };
 
   const generateBio = async () => {
     setIsGeneratingBio(true)

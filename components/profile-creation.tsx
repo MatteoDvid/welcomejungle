@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChevronRight, ChevronLeft, Upload, Sparkles, Wand2, X } from "lucide-react"
-import { SheetsService } from "@/lib/sheets"
+// import { SheetsService } from "@/lib/sheets" // <-- COMMENTED OUT
 import { OpenAIService } from "@/lib/openai"
 import { AuthService } from "@/lib/auth"
 import { Textarea } from "@/components/ui/textarea"
@@ -64,8 +64,9 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
     bio: "",
   })
   const [isGeneratingBio, setIsGeneratingBio] = useState(false)
-  const [bioGenerated, setBioGenerated] = useState(false)
+  const [, setBioGenerated] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  // const [error, setError] = useState<string | null>(null) // Commenté pour l'instant
 
   const steps = ["Basic Info", "Office Days", "Interests", "Activities", "Photo", "Bio"]
   const progress = ((currentStep + 1) / steps.length) * 100
@@ -86,10 +87,11 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
 
   const handleComplete = async () => {
     setIsSaving(true)
+    // setError(null) // Commenté pour l'instant
     try {
       const user = AuthService.getCurrentUser()
-      if (user) {
-        await SheetsService.saveProfile({
+      if (user && user.email) {
+        const profileData = {
           email: user.email,
           name: formData.name,
           role: formData.role,
@@ -97,11 +99,31 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
           interests: formData.interests,
           activities: formData.activities,
           bio: formData.bio,
-        })
+        };
+
+        const response = await fetch('/api/save-profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(profileData),
+        });
+
+        if (!response.ok) {
+          const errorResult = await response.json();
+          // Afficher l'erreur dans la console pour le moment
+          console.error("API Error:", errorResult.error || `Failed to save profile: ${response.statusText}`);
+          throw new Error(errorResult.error || `Failed to save profile: ${response.statusText}`);
+        }
+        onComplete()
+      } else {
+        console.error('User not found or email is missing for profile save.');
+        throw new Error('User not found or email is missing.');
       }
-      onComplete()
-    } catch (error) {
-      console.error("Failed to save profile:", error)
+    } catch (err) {
+      console.error("Failed to save profile (catch block):", err);
+      // setError(err instanceof Error ? err.message : "An unknown error occurred during save."); // Commenté
+      // Pour l'instant, on laisse l'erreur se propager ou être loggée, l'UI ne l'affichera pas directement
     } finally {
       setIsSaving(false)
     }
@@ -146,7 +168,7 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                 👋
               </motion.div>
               <h2 className="text-3xl font-heading text-jungle-yellow mb-2">Welcome to Office Pulse!</h2>
-              <p className="text-jungle-textLight/70 font-body">Let's get you set up to connect with amazing colleagues</p>
+              <p className="text-jungle-textLight/70 font-body">Let&apos;s get you set up to connect with amazing colleagues</p>
             </div>
             <div className="space-y-4">
               <div>
@@ -194,7 +216,7 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                 🏢
               </motion.div>
               <h2 className="text-3xl font-heading text-jungle-yellow mb-2">When are you in the office?</h2>
-              <p className="text-jungle-textLight/70 font-body">Select the days you're typically in the office</p>
+              <p className="text-jungle-textLight/70 font-body">Select the days you&apos;re typically in the office</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               {days.map((day, index) => (

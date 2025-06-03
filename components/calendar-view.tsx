@@ -197,12 +197,13 @@ export function CalendarView() {
   const selectedDayData = weeklyData[selectedDay]
 
   return (
-    <div className="min-h-screen p-4 md:p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="force-white-page-override">
+
+      <div className="max-w-7xl mx-auto space-y-6 p-4 md:p-6">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
           <h1 className="text-4xl font-bold text-black mb-2">Your Week at the Office 📅</h1>
-          <p className="text-muted-foreground">Plan your presence and discover who else is around</p>
+          <p className="text-muted-foreground">Plan your presence and discover who else&apos;s around</p>
         </motion.div>
 
         {/* Week Overview */}
@@ -283,7 +284,7 @@ export function CalendarView() {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Users className="w-5 h-5 mr-2 text-black" />
-                  Who's in the office - {selectedDayData.day}
+                  Who&apos;s in the office - {selectedDayData.day}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -331,7 +332,7 @@ export function CalendarView() {
                 ) : (
                   <div className="text-center py-8">
                     <div className="text-4xl mb-2">🏠</div>
-                    <p className="text-muted-foreground">You're working remotely</p>
+                    <p className="text-muted-foreground">You&apos;re working remotely</p>
                     <Button
                       variant="outline"
                       size="sm"

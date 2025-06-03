@@ -10,7 +10,7 @@ import { SlackNotifications } from "@/components/slack-notifications"
 import { AdminDashboard } from "@/components/admin-dashboard"
 import { Navigation } from "@/components/navigation"
 import { AuthService } from "@/lib/auth"
-import { SheetsService } from "@/lib/sheets"
+// import { SheetsService } from "@/lib/sheets"
 import { LanguageProvider } from "@/contexts/LanguageContext"
 import { LanguageSelector } from "@/components/language-selector"
 import { ProfileView } from "@/components/profile-view"
@@ -34,19 +34,23 @@ export default function OfficePulseMatch() {
         setUserRole(user.role as UserRole)
 
         // Check if profile is complete for ALL users
-        const profile = await SheetsService.getProfile(user.email)
-        if (profile) {
-          setIsProfileComplete(true)
-          // Si l'utilisateur a un profil, aller directement aux matches ou admin
-          if (user.role === "employee") {
-            setCurrentPage("matches")
-          } else {
-            setCurrentPage("admin")
-          }
-        } else {
-          // Tous les utilisateurs peuvent créer un profil
-          setCurrentPage("profile")
-        }
+        // const profile = await SheetsService.getProfile(user.email)
+        // if (profile) {
+        //   setIsProfileComplete(true)
+        //   // Si l'utilisateur a un profil, aller directement aux matches ou admin
+        //   if (user.role === "employee") {
+        //     setCurrentPage("matches")
+        //   } else {
+        //     setCurrentPage("admin")
+        //   }
+        // } else {
+        //   // Tous les utilisateurs peuvent créer un profil
+        //   setCurrentPage("profile")
+        // }
+        // Temporarily assume profile is not complete to allow flow to profile creation
+        setIsProfileComplete(false); 
+        setCurrentPage("profile");
+
       }
       setIsLoading(false)
     }

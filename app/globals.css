@@ -32,43 +32,91 @@
 @layer base {
   * {
     @apply border-border;
-    color: #000000; /* force noir partout */
+    /* color: #000000; */ /* Consider if this global color force is needed */
   }
 
-  html, body {
-    background-color: #FFE666 !important; /* Fond jaune équilibré */
+  html {
+    height: 100%;
+  }
+
+  body {
+    background-color: #FFE666 !important; /* Default yellow background */
+    min-height: 100%;
+    position: relative;
+    z-index: 0; /* Body as base layer */
+    /* All other body background rules previously here are effectively superseded or should be removed */
+  }
+
+  /* New rules for white page override */
+  .force-white-page-override {
+    background-color: white !important;
+    width: 100%;
+    min-height: 100vh;
+    display: block;
+    position: relative;
+    z-index: 1; /* Above body's z-index */
+  }
+
+  .force-white-page-override > * {
+    position: relative;
+    z-index: 2; /* Content within override is above its own background */
+  }
+
+  /* Commenting out old/conflicting attempts */
+  /*
+  body:not(.calendar-page), html:not(.calendar-page) {
+    background-color: #FFE666 !important;
     background-image: none !important;
     background: #FFE666 !important;
-    color: #000000; /* texte en noir */
-    font-family: 'Work Sans', sans-serif;
   }
 
-  /* Supprimer tous les dégradés sur les divs de fond - SAUF pour les matches */
+  body.calendar-page {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    background: #ffffff !important;
+  }
+
+  .weekly-calendar-page {
+    background-color: #ffffff !important;
+    background-image: none !important;
+  }
+
+  .calendar-view-page {
+    background-color: #ffffff !important;
+    background-image: none !important;
+  }
+  */
+
+  /* Supprimer les dégradés sauf pour les matches - This rule might also conflict if not managed */
+  /* Consider specificity or if this is still needed with the new approach */
+  /*
   .min-h-screen:not(.match-carousel-bg), .fixed.inset-0 {
     background: #FFE666 !important;
     background-image: none !important;
   }
+  */
 
-  /* Autoriser les fonds dégradés pour les matches */
   .match-carousel-bg {
     background: revert !important;
     background-image: revert !important;
   }
 
-  /* Typographie Welcome to the Jungle */
   h1, h2, h3, h4, h5, h6 {
     @apply font-welcome;
-    color: #000000; /* titres noirs */
+    color: #000000;
   }
 
   p, span, div, a, button {
     @apply font-work-sans;
-    color: #000000; /* textes divers noirs */
+    color: #000000;
   }
 
   [data-slot="card-title"] {
     color: #000000 !important;
   }
+
+  /* ... (rest of your specific component styles and overrides) ... */
+  /* Ensure these do not apply conflicting full-page backgrounds */
 
   .text-accent, .text-secondary, .text-primary, .text-muted-foreground {
     color: #000000 !important;
