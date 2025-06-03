@@ -17,7 +17,7 @@
     --secondary: 88 88 88; /* #585858 Welcome to the Jungle */
     --secondary-foreground: 255 255 255;
     --muted: 248 248 248; /* Gris très clair */
-    --muted-foreground: 88 88 88;
+    --muted-foreground: 0 0% 10%;
     --accent: 255 205 0; /* #FFCD00 Welcome to the Jungle */
     --accent-foreground: 88 88 88; /* #585858 Welcome to the Jungle */
     --destructive: 239 68 68;
