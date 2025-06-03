@@ -47,6 +47,36 @@ const days = [
   { id: "friday", label: "Friday", emoji: "📅", short: "Fri" },
 ]
 
+const projectTopics = [
+  { id: "ai-automation", label: "AI & Automation", emoji: "🤖", description: "Machine learning, process automation" },
+  { id: "sustainability", label: "Sustainability", emoji: "🌱", description: "Green initiatives, eco-friendly solutions" },
+  { id: "innovation", label: "Innovation Labs", emoji: "🚀", description: "R&D, experimental projects" },
+  { id: "customer-experience", label: "Customer Experience", emoji: "😊", description: "UX improvements, satisfaction" },
+  { id: "data-analytics", label: "Data & Analytics", emoji: "📊", description: "Insights, dashboards, metrics" },
+  { id: "digital-transformation", label: "Digital Transformation", emoji: "🔄", description: "Modernization, tech adoption" },
+  { id: "wellness", label: "Employee Wellness", emoji: "🧘", description: "Health, work-life balance" },
+  { id: "diversity", label: "Diversity & Inclusion", emoji: "🌈", description: "Culture, equality initiatives" },
+  { id: "security", label: "Cybersecurity", emoji: "🔒", description: "Data protection, compliance" },
+  { id: "education", label: "Learning & Development", emoji: "🎓", description: "Training, skill building" },
+  { id: "social-impact", label: "Social Impact", emoji: "❤️", description: "Community, charity work" },
+  { id: "productivity", label: "Productivity Tools", emoji: "⚡", description: "Efficiency, workflow optimization" },
+]
+
+const dreamProjects = [
+  { id: "ai-assistant", label: "Build an AI assistant for the team", emoji: "🤖" },
+  { id: "green-office", label: "Create a zero-waste office program", emoji: "♻️" },
+  { id: "hackathon", label: "Organize monthly innovation hackathons", emoji: "💻" },
+  { id: "mentorship", label: "Launch a company-wide mentorship program", emoji: "🤝" },
+  { id: "remote-culture", label: "Design the ultimate remote work culture", emoji: "🏠" },
+  { id: "wellness-app", label: "Develop an employee wellness app", emoji: "💪" },
+  { id: "knowledge-base", label: "Build a smart knowledge sharing platform", emoji: "📚" },
+  { id: "community", label: "Create local community partnerships", emoji: "🌍" },
+  { id: "gamification", label: "Gamify our work processes", emoji: "🎮" },
+  { id: "creative-space", label: "Design a creative collaboration space", emoji: "🎨" },
+  { id: "learning-platform", label: "Build a personalized learning platform", emoji: "🚀" },
+  { id: "culture-ambassador", label: "Become a company culture ambassador", emoji: "🌟" },
+]
+
 interface ProfileCreationProps {
   onComplete: () => void
 }
@@ -59,6 +89,8 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
     officeDays: [] as string[],
     interests: [] as string[],
     activities: [] as string[],
+    projectTopics: [] as string[],
+    dreamProject: "",
     photo: null as File | null,
     bio: "",
   })
@@ -66,7 +98,7 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
   const [bioGenerated, setBioGenerated] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
-  const steps = ["Basic Info", "Office Days", "Interests", "Activities", "Photo", "Bio"]
+  const steps = ["Basic Info", "Office Days", "Interests", "Activities", "Project Topics", "Dream Project", "Photo", "Bio"]
   const progress = ((currentStep + 1) / steps.length) * 100
 
   const handleNext = async () => {
@@ -95,6 +127,8 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
           officeDays: formData.officeDays,
           interests: formData.interests,
           activities: formData.activities,
+          projectTopics: formData.projectTopics,
+          dreamProject: formData.dreamProject,
           bio: formData.bio,
         })
       }
@@ -106,7 +140,7 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
     }
   }
 
-  const toggleSelection = (field: "officeDays" | "interests" | "activities", value: string) => {
+  const toggleSelection = (field: "officeDays" | "interests" | "activities" | "projectTopics", value: string) => {
     setFormData((prev) => ({
       ...prev,
       [field]: prev[field].includes(value) ? prev[field].filter((item) => item !== value) : [...prev[field], value],
@@ -327,6 +361,101 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
           >
             <div className="text-center mb-8">
               <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                className="text-6xl mb-4"
+              >
+                💡
+              </motion.div>
+              <h2 className="text-3xl font-heading text-jungle-yellow mb-2">What topics excite you?</h2>
+              <p className="text-jungle-textLight/70 font-body">Select project areas you'd love to contribute to</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {projectTopics.map((topic, index) => (
+                <motion.div
+                  key={topic.id}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05 }}
+                  whileHover={{ scale: 1.03, y: -3 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <Button
+                    variant={formData.projectTopics.includes(topic.id) ? "default" : "outline"}
+                    className={`w-full h-24 p-4 flex flex-col items-center justify-center transition-all ${
+                      formData.projectTopics.includes(topic.id)
+                        ? "bg-jungle-yellow text-jungle-gray button-shadow"
+                        : "border-gray-200 hover:bg-gray-50 hover:border-jungle-yellow/50 text-jungle-gray subtle-shadow"
+                    }`}
+                    onClick={() => toggleSelection("projectTopics", topic.id)}
+                  >
+                    <span className="text-2xl mb-1">{topic.emoji}</span>
+                    <span className="text-sm font-medium">{topic.label}</span>
+                    <span className="text-xs opacity-70 text-center">{topic.description}</span>
+                  </Button>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )
+
+      case 5:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            className="space-y-6"
+          >
+            <div className="text-center mb-8">
+              <motion.div
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY }}
+                className="text-6xl mb-4"
+              >
+                🚀
+              </motion.div>
+              <h2 className="text-3xl font-heading text-jungle-yellow mb-2">If you could work on any project...</h2>
+              <p className="text-jungle-textLight/70 font-body">What would be your dream initiative at the company?</p>
+            </div>
+            <div className="grid grid-cols-1 gap-3 max-h-[400px] overflow-y-auto pr-2">
+              {dreamProjects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  whileHover={{ scale: 1.02, x: 5 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Button
+                    variant={formData.dreamProject === project.id ? "default" : "outline"}
+                    className={`w-full p-4 justify-start text-left transition-all ${
+                      formData.dreamProject === project.id
+                        ? "bg-jungle-yellow text-jungle-gray button-shadow"
+                        : "border-gray-200 hover:bg-gray-50 hover:border-jungle-yellow/50 text-jungle-gray subtle-shadow"
+                    }`}
+                    onClick={() => setFormData((prev) => ({ ...prev, dreamProject: project.id }))}
+                  >
+                    <span className="text-2xl mr-3">{project.emoji}</span>
+                    <span className="text-sm font-medium">{project.label}</span>
+                  </Button>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )
+
+      case 6:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            className="space-y-6"
+          >
+            <div className="text-center mb-8">
+              <motion.div
                 animate={{ rotate: [0, 5, -5, 0] }}
                 transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
                 className="text-6xl mb-4"
@@ -378,82 +507,82 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
           </motion.div>
         )
 
-      case 5:
-        return (
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            className="space-y-6"
-          >
-            <div className="text-center mb-8">
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-                className="text-6xl mb-4"
-              >
-                ✨
-              </motion.div>
-              <h2 className="text-3xl font-heading text-jungle-yellow mb-2">Generate your bio</h2>
-              <p className="text-jungle-textLight/70 font-body">Let AI create a fun intro based on your interests</p>
-            </div>
-            <div className="space-y-6">
-              {formData.bio ? (
+        case 7:
+          return (
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              className="space-y-6"
+            >
+              <div className="text-center mb-8">
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-6 rounded-lg glass-effect border border-jungle-yellow/30"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+                  className="text-6xl mb-4"
                 >
-                  <motion.p
-                    className={`text-lg text-center font-body text-jungle-gray ${bioGenerated ? "typing-effect" : ""}`}
-                    initial={{ width: 0 }}
-                    animate={{ width: bioGenerated ? "100%" : "auto" }}
-                    transition={{ duration: 2 }}
-                  >
-                    {formData.bio}
-                  </motion.p>
+                  ✨
                 </motion.div>
-              ) : (
-                <div className="text-center">
+                <h2 className="text-3xl font-heading text-jungle-yellow mb-2">Create your bio</h2>
+                <p className="text-jungle-textLight/70 font-body">Let AI generate one or write your own</p>
+              </div>
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <Label htmlFor="bio" className="text-jungle-textLight font-body">
+                    Your Bio
+                  </Label>
+                  <textarea
+                    id="bio"
+                    value={formData.bio}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, bio: e.target.value }))}
+                    placeholder="Tell us a bit about yourself..."
+                    className="w-full min-h-[120px] p-4 bg-white/10 border border-white/20 rounded-lg text-jungle-textLight placeholder:text-jungle-textLight/50 font-body resize-none focus:outline-none focus:ring-2 focus:ring-jungle-yellow/50"
+                    rows={4}
+                  />
+                  <p className="text-xs text-jungle-textLight/60 text-right">
+                    {formData.bio.length}/500 characters
+                  </p>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Button
                     onClick={generateBio}
                     disabled={isGeneratingBio || formData.interests.length === 0}
                     className="bg-jungle-yellow text-jungle-gray hover:bg-jungle-yellow/90 glow-effect font-body"
-                    size="lg"
                   >
                     {isGeneratingBio ? (
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                        className="inline-block"
                       >
                         <Wand2 className="w-5 h-5 mr-2" />
                       </motion.div>
                     ) : (
                       <Sparkles className="w-5 h-5 mr-2" />
                     )}
-                    {isGeneratingBio ? "Generating..." : "Generate My Bio"}
+                    {isGeneratingBio ? "Generating..." : formData.bio ? "Generate Another" : "Generate with AI"}
                   </Button>
+                  
+                  {formData.bio && (
+                    <Button
+                      variant="outline"
+                      onClick={() => setFormData((prev) => ({ ...prev, bio: "" }))}
+                      className="border-jungle-yellow text-jungle-yellow hover:bg-jungle-yellow hover:text-jungle-gray font-body"
+                    >
+                      Clear
+                    </Button>
+                  )}
                 </div>
-              )}
-              {formData.bio && (
-                <div className="text-center">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setBioGenerated(false)
-                      generateBio()
-                    }}
-                    disabled={isGeneratingBio}
-                    className="border-jungle-yellow text-jungle-yellow hover:bg-jungle-yellow hover:text-jungle-gray font-body"
-                  >
-                    <Wand2 className="w-4 h-4 mr-2" />
-                    Generate Another
-                  </Button>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )
+                
+                {formData.interests.length === 0 && (
+                  <p className="text-xs text-jungle-yellow/70 text-center">
+                    ⚠️ Select some interests first to generate a personalized bio
+                  </p>
+                )}
+              </div>
+            </motion.div>
+          )
 
       default:
         return null
@@ -471,8 +600,12 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
       case 3:
         return formData.activities.length > 0
       case 4:
-        return true // Photo is optional
+        return formData.projectTopics.length > 0
       case 5:
+        return formData.dreamProject !== ""
+      case 6:
+        return true // Photo is optional
+      case 7:
         return formData.bio
       default:
         return false
