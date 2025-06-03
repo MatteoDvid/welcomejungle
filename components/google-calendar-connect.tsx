@@ -5,14 +5,14 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Users, CheckCircle, XCircle, RefreshCw, LogIn, LogOut, RotateCcw } from "lucide-react"
+import { Calendar, Users, CheckCircle, XCircle, RefreshCw, LogIn, LogOut, RotateCcw, Clock, Users2 } from "lucide-react"
 import { GoogleCalendar, GoogleCalendarEvent } from "@/lib/google-calendar"
 import { useLanguage } from "@/contexts/LanguageContext"
 
 interface GoogleCalendarConnectProps {
   onEventsUpdate?: (events: GoogleCalendarEvent[]) => void
   onAddPresence?: () => void
-  onAddGroupEvent?: () => void
+  onAddGroupEvent?: (group: string, time: string) => void
 }
 
 export function GoogleCalendarConnect({
@@ -27,6 +27,10 @@ export function GoogleCalendarConnect({
   const [events, setEvents] = useState<GoogleCalendarEvent[]>([])
   const [lastSync, setLastSync] = useState<Date | null>(null)
 
+  const [showGroupForm, setShowGroupForm] = useState(false)
+  const [selectedGroup, setSelectedGroup] = useState('Sport')
+  const [selectedTime, setSelectedTime] = useState('12:00')
+
   useEffect(() => {
     checkConnectionStatus()
   }, [])
@@ -36,10 +40,7 @@ export function GoogleCalendarConnect({
       await GoogleCalendar.init()
       const connected = GoogleCalendar.isSignedIn()
       setIsConnected(connected)
-      
-      if (connected) {
-        await syncEvents()
-      }
+      if (connected) await syncEvents()
     } catch (error) {
       console.error('Error checking Google Calendar connection:', error)
       setIsConnected(true)
@@ -54,10 +55,9 @@ export function GoogleCalendarConnect({
       if (success) {
         setIsConnected(true)
         await syncEvents()
-        console.log('✅ Successfully connected to Google Calendar')
       }
     } catch (error) {
-      console.error('Error connecting to Google Calendar:', error)
+      console.error('Connection error:', error)
       setIsConnected(true)
       await loadDemoEvents()
     } finally {
@@ -73,7 +73,7 @@ export function GoogleCalendarConnect({
       setLastSync(null)
       onEventsUpdate?.([])
     } catch (error) {
-      console.error('Error disconnecting from Google Calendar:', error)
+      console.error('Error during disconnect:', error)
     }
   }
 
@@ -82,15 +82,12 @@ export function GoogleCalendarConnect({
     try {
       const startDate = new Date()
       startDate.setDate(startDate.getDate() - startDate.getDay())
-      
       const weekEvents = await GoogleCalendar.getWeekEvents(startDate)
       setEvents(weekEvents)
       setLastSync(new Date())
       onEventsUpdate?.(weekEvents)
-      
-      console.log(`📅 Synchronized ${weekEvents.length} events from Google Calendar`)
     } catch (error) {
-      console.error('Error syncing events:', error)
+      console.error('Sync error:', error)
       await loadDemoEvents()
     } finally {
       setIsSyncing(false)
@@ -102,7 +99,6 @@ export function GoogleCalendarConnect({
     try {
       const startDate = new Date()
       startDate.setDate(startDate.getDate() - startDate.getDay())
-      
       const demoEvents = await GoogleCalendar.getWeekEvents(startDate)
       setEvents(demoEvents)
       setLastSync(new Date())
@@ -114,21 +110,18 @@ export function GoogleCalendarConnect({
 
   const formatLastSync = () => {
     if (!lastSync) return 'Never'
-    
     const now = new Date()
     const diffMs = now.getTime() - lastSync.getTime()
     const diffMins = Math.floor(diffMs / 60000)
-    
     if (diffMins < 1) return language === 'fr' ? 'À l\'instant' : 'Just now'
     if (diffMins < 60) return language === 'fr' ? `Il y a ${diffMins} min` : `${diffMins} min ago`
-    
     const diffHours = Math.floor(diffMins / 60)
     return language === 'fr' ? `Il y a ${diffHours}h` : `${diffHours}h ago`
   }
 
   return (
     <div className="space-y-4">
-      {/* Connection Status Card */}
+      {/* Connexion */}
       <Card className="glass-effect card-shadow">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-jungle-gray font-heading">
@@ -142,91 +135,68 @@ export function GoogleCalendarConnect({
               {isConnected ? (
                 <>
                   <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span className="text-sm font-body text-green-600">
-                    {language === 'fr' ? 'Connecté' : 'Connected'}
-                  </span>
+                  <span className="text-sm text-green-600 font-medium">Connecté</span>
                 </>
               ) : (
                 <>
                   <XCircle className="w-4 h-4 text-red-500" />
-                  <span className="text-sm font-body text-red-600">
-                    {language === 'fr' ? 'Non connecté' : 'Not connected'}
-                  </span>
+                  <span className="text-sm text-red-600 font-medium">Non connecté</span>
                 </>
               )}
             </div>
-            
             {isConnected ? (
               <Button
                 variant="outline"
                 size="sm"
                 onClick={disconnectFromGoogle}
-                className="border-red-300 text-red-600 hover:bg-red-50 font-body"
+                className="border-red-300 text-red-600 hover:bg-red-50"
               >
-                <LogOut className="w-3 h-3 mr-2" />
-                {language === 'fr' ? 'Déconnecter' : 'Disconnect'}
+                <LogOut className="w-4 h-4 mr-1" /> Déconnecter
               </Button>
             ) : (
               <Button
                 onClick={connectToGoogle}
                 disabled={isConnecting}
-                className="bg-jungle-yellow text-jungle-gray hover:bg-jungle-yellow/90 button-shadow font-body"
+                className="bg-jungle-yellow text-jungle-gray hover:bg-jungle-yellow/90"
               >
                 {isConnecting ? (
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                   >
-                    <RefreshCw className="w-3 h-3 mr-2" />
+                    <RefreshCw className="w-4 h-4 mr-2" />
                   </motion.div>
                 ) : (
-                  <LogIn className="w-3 h-3 mr-2" />
+                  <LogIn className="w-4 h-4 mr-2" />
                 )}
-                {isConnecting 
-                  ? (language === 'fr' ? 'Connexion...' : 'Connecting...')
-                  : (language === 'fr' ? 'Connecter' : 'Connect')
-                }
+                Connecter
               </Button>
             )}
           </div>
 
           {isConnected && (
-            <div className="flex items-center justify-between pt-2 border-t border-gray-200">
-              <div className="text-xs text-jungle-gray/60 font-body">
-                {language === 'fr' ? 'Dernière sync:' : 'Last sync:'} {formatLastSync()}
-              </div>
+            <div className="flex justify-between text-xs text-gray-500 pt-2 border-t border-gray-100">
+              <span>Dernière sync : {formatLastSync()}</span>
               <Button
-                variant="ghost"
                 size="sm"
+                variant="ghost"
+                className="h-6 px-2 text-jungle-yellow"
                 onClick={syncEvents}
-                disabled={isSyncing}
-                className="text-jungle-yellow hover:bg-jungle-yellow/10 font-body h-7"
               >
-                {isSyncing ? (
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                  >
-                    <RefreshCw className="w-3 h-3 mr-1" />
-                  </motion.div>
-                ) : (
-                  <RotateCcw className="w-3 h-3 mr-1" />
-                )}
-                {isSyncing 
-                  ? (language === 'fr' ? 'Sync...' : 'Syncing...')
-                  : (language === 'fr' ? 'Sync' : 'Sync')
-                }
+                <RotateCcw className="w-3 h-3 mr-1" />
+                Rafraîchir
               </Button>
             </div>
           )}
         </CardContent>
       </Card>
 
+      {/* Actions */}
       {isConnected && (
-        <Card className="glass-effect border-blue-200">
-          <CardContent className="p-4">
-            <h3 className="text-sm font-heading text-jungle-gray mb-3">
-              🚀 {language === 'fr' ? 'Actions de démonstration' : 'Demo Actions'}
+        <Card>
+          <CardContent className="p-4 space-y-4">
+            <h3 className="text-sm font-semibold text-gray-700">🚀 Actions de
+ démonstration' : 'Demo Actions'}
             </h3>
             <div className="space-y-2">
               <Button
@@ -238,15 +208,59 @@ export function GoogleCalendarConnect({
                 <Users className="w-3 h-3 mr-2" />
                 {language === 'fr' ? 'Ajouter présence aujourd\'hui' : 'Add today\'s presence'}
               </Button>
+
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => onAddGroupEvent?.()}
+                onClick={() => setShowGroupForm(!showGroupForm)}
                 className="w-full border-blue-300 text-blue-600 hover:bg-blue-50 font-body text-xs"
               >
                 <Calendar className="w-3 h-3 mr-2" />
-                {language === 'fr' ? 'Créer événement de groupe' : 'Create group event'}
+                {showGroupForm
+                  ? (language === 'fr' ? 'Annuler' : 'Cancel')
+                  : (language === 'fr' ? 'Créer événement de groupe' : 'Create group event')}
               </Button>
+
+              {showGroupForm && (
+                <div className="space-y-2 mt-2">
+                  <div>
+                    <label className="text-xs">Choisir le groupe :</label>
+                    <select
+                      value={selectedGroup}
+                      onChange={(e) => setSelectedGroup(e.target.value)}
+                      className="w-full border rounded p-1 text-sm"
+                    >
+                      <option value="Sport">Sport</option>
+                      <option value="Tech">Tech</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-xs">Choisir l'horaire :</label>
+                    <input
+  type="time"
+  value={selectedTime}
+  onChange={(e) => {
+    console.log('⏰ Time selected:', e.target.value)  // DEBUG log
+    setSelectedTime(e.target.value)
+  }}
+  className="w-full border rounded p-1 text-sm"
+/>
+
+                  </div>
+                  <Button
+  size="sm"
+  className="w-full bg-green-500 text-white hover:bg-green-600"
+  onClick={() => {
+    console.log('🚀 Creating group event:', selectedGroup, selectedTime)  // DEBUG log
+    onAddGroupEvent?.(selectedGroup, selectedTime)
+    setShowGroupForm(false)
+  }}
+>
+  Confirmer l’événement
+</Button>
+
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

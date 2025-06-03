@@ -109,25 +109,33 @@ export function WeeklyCalendar() {
     return days
   }
 
-  const addGroupEvent = () => {
-    const today = new Date().toISOString().split('T')[0]
-    const randomGroup = Math.random() > 0.5 ? 'Sport' : 'Tech'
-    const color = randomGroup === 'Sport' ? 'bg-red-500' : 'bg-purple-500'
-  
-    const newEvent: CalendarEvent = {
-      id: `group-${Date.now()}`,
-      title: `Événement ${randomGroup}`,
-      startTime: '12:00',
-      endTime: '13:00',
-      color: color,
-      date: today,
-      type: 'group',
-      attendees: ['Moi', randomGroup],
-      location: randomGroup === 'Sport' ? 'Salle de sport' : 'Salle Tech'
-    }
-  
-    setGroupEvents((prev) => [...prev, newEvent])
+// Fonction utilitaire pour ajouter 1h en tenant compte de 24h
+const addOneHour = (time: string) => {
+  const [hours, minutes] = time.split(':').map(Number)
+  const newHours = (hours + 1) % 24
+  return `${String(newHours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`
+}
+
+// Fonction pour ajouter un événement de groupe à la bonne heure
+const addGroupEvent = (group: string, time: string) => {
+  const today = new Date().toISOString().split('T')[0]
+  const color = group === 'Sport' ? 'bg-red-500' : 'bg-purple-500'
+
+  const newEvent: CalendarEvent = {
+    id: `group-${Date.now()}`,
+    title: `Événement ${group}`,
+    startTime: time,
+    endTime: addOneHour(time),
+    color: color,
+    date: today,
+    type: 'group',
+    attendees: ['Moi', group],
+    location: group === 'Sport' ? 'Salle de sport' : 'Salle Tech'
   }
+
+  setGroupEvents((prev) => [...prev, newEvent])
+}
+
   
   const getDemoEvents = (): CalendarEvent[] => {
     const today = currentWeekStart.toISOString().split('T')[0]
@@ -266,12 +274,16 @@ if (groupEvents.length > 0) {
   const getEventPosition = (event: CalendarEvent) => {
     const startHour = parseInt(event.startTime.split(':')[0])
     const endHour = parseInt(event.endTime.split(':')[0])
+  
     const duration = endHour - startHour
+  
+    // Agenda commence à 8h (8 * 60 min = 480 min)
     return {
       top: `${(startHour - 8) * 60}px`,
-      height: `${duration * 60 - 4}px`
+      height: `${duration * 60 - 4}px` // petit padding pour éviter le chevauchement visuel
     }
   }
+  
 
   const filteredEvents = allEvents.filter(event => {
     if (showOnlyMyGroups && selectedGroups.length > 0) {
@@ -372,8 +384,9 @@ if (groupEvents.length > 0) {
         <GoogleCalendarConnect
   onEventsUpdate={setGoogleEvents}
   onAddPresence={() => addMyPresenceToday('present')}
-  onAddGroupEvent={addGroupEvent}
+  onAddGroupEvent={(group, time) => addGroupEvent(group, time)}
 />
+
 
 
           <Card>
