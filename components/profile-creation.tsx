@@ -8,10 +8,11 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ChevronRight, ChevronLeft, Upload, Sparkles, Wand2 } from "lucide-react"
+import { ChevronRight, ChevronLeft, Upload, Sparkles, Wand2, X } from "lucide-react"
 import { SheetsService } from "@/lib/sheets"
 import { OpenAIService } from "@/lib/openai"
 import { AuthService } from "@/lib/auth"
+import { Textarea } from "@/components/ui/textarea"
 
 const interests = [
   { id: "tech", label: "Tech", emoji: "💻" },
@@ -402,16 +403,40 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-6 rounded-lg glass-effect border border-jungle-yellow/30"
+                  className="space-y-4"
                 >
-                  <motion.p
-                    className={`text-lg text-center font-body text-jungle-gray ${bioGenerated ? "typing-effect" : ""}`}
-                    initial={{ width: 0 }}
-                    animate={{ width: bioGenerated ? "100%" : "auto" }}
-                    transition={{ duration: 2 }}
-                  >
-                    {formData.bio}
-                  </motion.p>
+                  <div className="p-6 rounded-lg glass-effect border border-jungle-yellow/30">
+                    <Textarea
+                      value={formData.bio}
+                      onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
+                      className="w-full min-h-[120px] bg-transparent border-none resize-none text-lg text-center font-body text-jungle-gray placeholder-jungle-gray/50 focus:outline-none"
+                      placeholder="Edit your bio here..."
+                    />
+                  </div>
+                  
+                  <div className="flex justify-center gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setBioGenerated(false)
+                        generateBio()
+                      }}
+                      disabled={isGeneratingBio}
+                      className="border-jungle-yellow text-jungle-yellow hover:bg-jungle-yellow hover:text-jungle-gray font-body"
+                    >
+                      <Wand2 className="w-4 h-4 mr-2" />
+                      Generate Another
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      onClick={() => setFormData(prev => ({ ...prev, bio: "" }))}
+                      className="border-red-400 text-red-600 hover:bg-red-50 font-body"
+                    >
+                      <X className="w-4 h-4 mr-2" />
+                      Clear
+                    </Button>
+                  </div>
                 </motion.div>
               ) : (
                 <div className="text-center">
@@ -432,22 +457,6 @@ export function ProfileCreation({ onComplete }: ProfileCreationProps) {
                       <Sparkles className="w-5 h-5 mr-2" />
                     )}
                     {isGeneratingBio ? "Generating..." : "Generate My Bio"}
-                  </Button>
-                </div>
-              )}
-              {formData.bio && (
-                <div className="text-center">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setBioGenerated(false)
-                      generateBio()
-                    }}
-                    disabled={isGeneratingBio}
-                    className="border-jungle-yellow text-jungle-yellow hover:bg-jungle-yellow hover:text-jungle-gray font-body"
-                  >
-                    <Wand2 className="w-4 h-4 mr-2" />
-                    Generate Another
                   </Button>
                 </div>
               )}

@@ -26,18 +26,18 @@ export function Login() {
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   const roles = [
-    { value: "Employé", label: t.login.employee },
-    { value: "Manager", label: t.login.manager },
-    { value: "RH", label: t.login.hr },
-    { value: "Office Manager", label: t.login.officeManager }
+    { value: "employee", label: t.login.employee, displayName: "Employé" },
+    { value: "manager", label: t.login.manager, displayName: "Manager" },
+    { value: "hr", label: t.login.hr, displayName: "RH" },
+    { value: "office_manager", label: t.login.officeManager, displayName: "Office Manager" }
   ]
 
   // Predefined test accounts for quick access
   const testAccounts = [
-    { email: "alice@company.com", password: "test1234", role: "Employé" },
-    { email: "manager@company.com", password: "manager22", role: "Manager" },
-    { email: "rh@company.com", password: "rhpass", role: "RH" },
-    { email: "office@company.com", password: "office33", role: "Office Manager" }
+    { email: "alice@company.com", password: "test1234", role: "employee", displayName: "Employé" },
+    { email: "manager@company.com", password: "manager22", role: "manager", displayName: "Manager" },
+    { email: "rh@company.com", password: "rhpass", role: "hr", displayName: "RH" },
+    { email: "office@company.com", password: "office33", role: "office_manager", displayName: "Office Manager" }
   ]
 
   const validateForm = (): boolean => {
@@ -80,7 +80,7 @@ export function Login() {
         success = await signUp(
           formData.email.trim(),
           formData.password,
-          formData.role as "Employé" | "Manager" | "RH" | "Office Manager"
+          formData.role as "employee" | "manager" | "hr" | "office_manager"
         )
       }
 
@@ -342,21 +342,65 @@ export function Login() {
                   className="mt-8 pt-6 border-t border-gray-200"
                 >
                   <p className="text-sm text-jungle-gray/60 mb-4 text-center font-body">
-                    Comptes de test disponibles:
+                    ✨ Connexion rapide - Comptes de démo
                   </p>
-                  <div className="grid grid-cols-2 gap-2">
+                  
+                  {/* Comptes en ligne */}
+                  <div className="flex flex-col gap-2">
                     {testAccounts.map((account, index) => (
-                      <button
+                      <motion.button
                         key={account.email}
                         type="button"
                         onClick={() => fillTestAccount(account)}
-                        className="p-2 text-xs bg-gray-50 rounded-lg border border-gray-200 hover:border-jungle-yellow hover:bg-jungle-yellow/5 transition-all text-left"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.9 + index * 0.1 }}
+                        whileHover={{ scale: 1.02, x: 4 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="group relative p-3 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-200 hover:border-jungle-yellow hover:shadow-md transition-all duration-300 text-left overflow-hidden"
                       >
-                        <div className="font-medium text-jungle-gray">{account.role}</div>
-                        <div className="text-jungle-gray/60 truncate">{account.email}</div>
-                      </button>
+                        {/* Icône de rôle */}
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-jungle-yellow/10 flex items-center justify-center group-hover:bg-jungle-yellow/20 transition-colors">
+                            <span className="text-lg">
+                              {account.displayName === "Employé" ? "👤" : 
+                               account.displayName === "Manager" ? "👔" : 
+                               account.displayName === "RH" ? "🛡️" : "🏢"}
+                            </span>
+                          </div>
+                          
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-bold text-jungle-gray group-hover:text-jungle-yellow transition-colors">
+                                {account.displayName}
+                              </span>
+                              <span className="text-xs bg-jungle-yellow/20 text-jungle-gray px-2 py-0.5 rounded-full">
+                                Démo
+                              </span>
+                            </div>
+                            <div className="text-xs text-jungle-gray/60 truncate group-hover:text-jungle-gray/80 transition-colors">
+                              {account.email}
+                            </div>
+                          </div>
+                          
+                          {/* Flèche d'action */}
+                          <div className="text-jungle-gray/40 group-hover:text-jungle-yellow group-hover:translate-x-1 transition-all">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </div>
+                        </div>
+                        
+                        {/* Effet de survol */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-jungle-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </motion.button>
                     ))}
                   </div>
+                  
+                  {/* Petite note explicative */}
+                  <p className="text-xs text-jungle-gray/50 text-center mt-3 font-body">
+                    Cliquez sur un rôle pour vous connecter automatiquement
+                  </p>
                 </motion.div>
               )}
             </CardContent>

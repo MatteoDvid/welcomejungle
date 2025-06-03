@@ -17,7 +17,7 @@
     --secondary: 0 0 0; /* #000000 noir au lieu de gris */
     --secondary-foreground: 255 255 255;
     --muted: 248 248 248; /* Gris très clair */
-    --muted-foreground: 88 88 88;
+    --muted-foreground: 0 0 0; /* Noir au lieu de gris */
     --accent: 0 0 0; /* #000000 noir au lieu de jaune */
     --accent-foreground: 255 255 255; /* Blanc pour contraste */
     --destructive: 239 68 68;
@@ -43,10 +43,16 @@
     font-family: 'Work Sans', sans-serif;
   }
   
-  /* Supprimer tous les dégradés sur les divs de fond */
-  .min-h-screen, .fixed.inset-0 {
+  /* Supprimer tous les dégradés sur les divs de fond - SAUF pour les matches */
+  .min-h-screen:not(.match-carousel-bg), .fixed.inset-0 {
     background: #FFE666 !important;
     background-image: none !important;
+  }
+  
+  /* Autoriser les fonds dégradés pour les matches */
+  .match-carousel-bg {
+    background: revert !important;
+    background-image: revert !important;
   }
   
   /* Typographie Welcome to the Jungle */
@@ -64,7 +70,7 @@
   }
   
   /* Forcer TOUTES les couleurs accent, secondary et primary en noir */
-  .text-accent, .text-secondary, .text-primary {
+  .text-accent, .text-secondary, .text-primary, .text-muted-foreground {
     color: #000000 !important;
   }
   
@@ -74,6 +80,78 @@
   
   .border-accent, .border-secondary, .border-primary {
     border-color: #000000 !important;
+  }
+  
+  /* FORCER ABSOLUMENT TOUT CE QUI PEUT ÊTRE VERT EN NOIR - SAUF dans les matches */
+  *:not(.match-card *):not(.match-carousel-bg *) {
+    color: #000000 !important;
+  }
+  
+  /* Exception pour les cartes et fonds qui doivent rester blancs */
+  .bg-white, [data-slot="card"], .glass-effect, .match-card {
+    background-color: #ffffff !important;
+  }
+  
+  /* Exception spéciale pour les cartes de matches */
+  .match-card * {
+    color: revert !important;
+  }
+  
+  /* FORCER LE FOND BLANC DES CARTES DE MATCHES */
+  .match-card,
+  .match-card.bg-white,
+  div.match-card,
+  [class*="match-card"] {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    background-image: none !important;
+  }
+  
+  /* Forcer le fond blanc pour tous les éléments avec bg-white dans les matches */
+  .match-card .bg-white,
+  .match-card div[class*="bg-white"],
+  .match-carousel-bg .bg-white {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    background-image: none !important;
+  }
+  
+  /* Forcer le fond gris pour les éléments avec bg-gray dans les matches */
+  .match-card .bg-gray-50,
+  .match-card div[class*="bg-gray-50"] {
+    background-color: #f9fafb !important;
+    background: #f9fafb !important;
+  }
+  
+  .match-card .bg-gray-100,
+  .match-card div[class*="bg-gray-100"] {
+    background-color: #f3f4f6 !important;
+    background: #f3f4f6 !important;
+  }
+  
+  .match-card .text-black {
+    color: #000000 !important;
+  }
+  
+  .match-card .text-white {
+    color: #ffffff !important;
+  }
+  
+  .match-card .text-gray-600 {
+    color: #4b5563 !important;
+  }
+  
+  .match-card .text-gray-500 {
+    color: #6b7280 !important;
+  }
+  
+  .match-card .text-gray-700 {
+    color: #374151 !important;
+  }
+  
+  /* Exception pour les boutons et éléments spéciaux */
+  button, .bg-jungle-yellow {
+    color: #585858 !important;
   }
 }
 

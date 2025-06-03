@@ -85,7 +85,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
                 </div>
                 <div className="text-right">
                   <span className="font-medium">{day.count}</span>
-                  <span className="text-sm text-muted-foreground ml-1">people</span>
+                  <span className="text-sm text-black ml-1">people</span>
                 </div>
               </motion.div>
             ))}
@@ -99,7 +99,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Active Matches</p>
+                <p className="text-sm text-black">Active Matches</p>
                 <p className="text-2xl font-bold text-black">{stats.activeMatches}</p>
               </div>
               <MessageSquare className="w-8 h-8 text-black" />
@@ -111,7 +111,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Events This Week</p>
+                <p className="text-sm text-black">Events This Week</p>
                 <p className="text-2xl font-bold text-black">{stats.eventsThisWeek}</p>
               </div>
               <Calendar className="w-8 h-8 text-black" />
@@ -123,7 +123,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Success Rate</p>
+                <p className="text-sm text-black">Success Rate</p>
                 <p className="text-2xl font-bold text-black">{stats.matchSuccessRate}%</p>
               </div>
               <TrendingUp className="w-8 h-8 text-black" />
@@ -149,7 +149,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
               <div className="text-center">
                 <Coffee className="w-8 h-8 mx-auto mb-2 text-black" />
                 <h4 className="font-medium mb-1">Team Coffee Break</h4>
-                <p className="text-sm text-muted-foreground mb-3">Wednesday 3:00 PM</p>
+                <p className="text-sm text-black mb-3">Wednesday 3:00 PM</p>
                 <Button size="sm" className="bg-primary text-text-dark hover:bg-primary/90">
                   Schedule
                 </Button>
@@ -163,7 +163,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
               <div className="text-center">
                 <Users className="w-8 h-8 mx-auto mb-2 text-black" />
                 <h4 className="font-medium mb-1">Team Lunch</h4>
-                <p className="text-sm text-muted-foreground mb-3">Friday 12:30 PM</p>
+                <p className="text-sm text-black mb-3">Friday 12:30 PM</p>
                 <Button
                   size="sm"
                   variant="outline"
@@ -181,7 +181,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
               <div className="text-center">
                 <BarChart3 className="w-8 h-8 mx-auto mb-2 text-black" />
                 <h4 className="font-medium mb-1">Brainstorm Session</h4>
-                <p className="text-sm text-muted-foreground mb-3">Thursday 2:00 PM</p>
+                <p className="text-sm text-black mb-3">Thursday 2:00 PM</p>
                 <Button
                   size="sm"
                   variant="outline"
@@ -291,7 +291,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
           <div className="text-center p-4 rounded-lg bg-white/5 border border-white/10">
             <h4 className="text-lg font-semibold mb-2">Office Efficiency Score</h4>
             <div className="text-3xl font-bold text-black mb-2">87%</div>
-            <p className="text-sm text-muted-foreground">+5% from last week</p>
+            <p className="text-sm text-black">+5% from last week</p>
           </div>
 
           <Button className="w-full bg-primary text-text-dark hover:bg-primary/90">
@@ -310,32 +310,32 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
         <Card className="glass-effect border-white/20">
           <CardContent className="p-4 text-center">
             <Users className="w-8 h-8 mx-auto mb-2 text-black" />
-            <p className="text-2xl font-bold">{stats.totalEmployees}</p>
-            <p className="text-sm text-muted-foreground">Total Employees</p>
+            <p className="text-2xl font-bold text-black">Total Employees</p>
+            <p className="text-sm text-black">Total Employees</p>
           </CardContent>
         </Card>
 
         <Card className="glass-effect border-white/20">
           <CardContent className="p-4 text-center">
             <TrendingUp className="w-8 h-8 mx-auto mb-2 text-black" />
-            <p className="text-2xl font-bold">{stats.weeklyAttendance}%</p>
-            <p className="text-sm text-muted-foreground">Weekly Attendance</p>
+            <p className="text-2xl font-bold text-black">Weekly Attendance</p>
+            <p className="text-sm text-black">Weekly Attendance</p>
           </CardContent>
         </Card>
 
         <Card className="glass-effect border-white/20">
           <CardContent className="p-4 text-center">
             <MessageSquare className="w-8 h-8 mx-auto mb-2 text-black" />
-            <p className="text-2xl font-bold">342</p>
-            <p className="text-sm text-muted-foreground">Total Matches</p>
+            <p className="text-2xl font-bold text-black">Total Matches</p>
+            <p className="text-sm text-black">Total Matches</p>
           </CardContent>
         </Card>
 
         <Card className="glass-effect border-white/20">
           <CardContent className="p-4 text-center">
             <Zap className="w-8 h-8 mx-auto mb-2 text-black" />
-            <p className="text-2xl font-bold">{stats.matchSuccessRate}%</p>
-            <p className="text-sm text-muted-foreground">Engagement Rate</p>
+            <p className="text-2xl font-bold text-black">Engagement Rate</p>
+            <p className="text-sm text-black">Engagement Rate</p>
           </CardContent>
         </Card>
       </div>
@@ -361,7 +361,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
                 >
                   <div>
                     <p className="font-medium">{match.activity}</p>
-                    <p className="text-sm text-muted-foreground">{match.count} matches</p>
+                    <p className="text-sm text-black">{match.count} matches</p>
                   </div>
                   <Badge className="bg-black text-white">{match.growth}</Badge>
                 </motion.div>
@@ -400,7 +400,7 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
                     <p className="text-sm">
                       <span className="font-medium">{activity.user}</span> {activity.action}
                     </p>
-                    <p className="text-xs text-muted-foreground">{activity.time}</p>
+                    <p className="text-xs text-black">{activity.time}</p>
                   </div>
                   <Badge
                     variant="outline"
@@ -456,9 +456,9 @@ export function AdminDashboard({ userRole }: AdminDashboardProps) {
               ? "Team Dashboard 👥"
               : userRole === "office-manager"
                 ? "Office Management 🏢"
-                : "HR Analytics ��"}
+                : "HR Analytics "}
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-black">
             {userRole === "manager"
               ? "Monitor your team's office presence and connections"
               : userRole === "office-manager"

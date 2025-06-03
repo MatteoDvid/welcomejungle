@@ -2,6 +2,9 @@ export interface User {
   email: string
   role: "employee" | "manager" | "hr" | "office_manager"
   name?: string
+  avatar?: string
+  firstName?: string
+  lastName?: string
 }
 
 // Demo users - in production this would come from Google Sheets
