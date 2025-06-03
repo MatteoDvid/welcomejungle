@@ -7,24 +7,24 @@
 @layer base {
   :root {
     --background: 255 230 102; /* Fond jaune équilibré */
-    --foreground: 88 88 88; /* Texte gris foncé */
+    --foreground: 0 0 0; /* Texte noir */
     --card: 255 255 255; /* Cartes blanches */
-    --card-foreground: 88 88 88; /* Texte des cartes en gris */
+    --card-foreground: 0 0 0; /* Texte des cartes en noir */
     --popover: 255 255 255;
-    --popover-foreground: 88 88 88;
-    --primary: 0 0 0; /* Noir au lieu de jaune */
-    --primary-foreground: 88 88 88; /* #585858 Welcome to the Jungle */
-    --secondary: 0 0 0; /* #000000 noir au lieu de gris */
+    --popover-foreground: 0 0 0;
+    --primary: 0 0 0; /* Noir */
+    --primary-foreground: 0 0 0;
+    --secondary: 0 0 0;
     --secondary-foreground: 255 255 255;
-    --muted: 248 248 248; /* Gris très clair */
-    --muted-foreground: 0 0 0; /* Noir au lieu de gris */
-    --accent: 0 0 0; /* #000000 noir au lieu de jaune */
-    --accent-foreground: 255 255 255; /* Blanc pour contraste */
+    --muted: 248 248 248;
+    --muted-foreground: 0 0 0;
+    --accent: 0 0 0;
+    --accent-foreground: 255 255 255;
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
-    --border: 229 229 229; /* Bordures grises claires */
-    --input: 248 248 248; /* Inputs gris très clair */
-    --ring: 255 205 0; /* #FFCD00 Welcome to the Jungle */
+    --border: 229 229 229;
+    --input: 248 248 248;
+    --ring: 255 205 0;
     --radius: 0.75rem;
   }
 }
@@ -32,72 +32,68 @@
 @layer base {
   * {
     @apply border-border;
+    color: #000000; /* force noir partout */
   }
-  
-  /* FOND JAUNE ÉQUILIBRÉ PARTOUT */
+
   html, body {
-    background-color: #FFE666 !important;
+    background-color: #FFE666 !important; /* Fond jaune équilibré */
     background-image: none !important;
     background: #FFE666 !important;
-    color: #585858;
+    color: #000000; /* texte en noir */
     font-family: 'Work Sans', sans-serif;
   }
-  
+
   /* Supprimer tous les dégradés sur les divs de fond - SAUF pour les matches */
   .min-h-screen:not(.match-carousel-bg), .fixed.inset-0 {
     background: #FFE666 !important;
     background-image: none !important;
   }
-  
+
   /* Autoriser les fonds dégradés pour les matches */
   .match-carousel-bg {
     background: revert !important;
     background-image: revert !important;
   }
-  
+
   /* Typographie Welcome to the Jungle */
   h1, h2, h3, h4, h5, h6 {
     @apply font-welcome;
+    color: #000000; /* titres noirs */
   }
-  
+
   p, span, div, a, button {
     @apply font-work-sans;
+    color: #000000; /* textes divers noirs */
   }
-  
-  /* Forcer tous les titres de cartes en noir */
+
   [data-slot="card-title"] {
     color: #000000 !important;
   }
-  
-  /* Forcer TOUTES les couleurs accent, secondary et primary en noir */
+
   .text-accent, .text-secondary, .text-primary, .text-muted-foreground {
     color: #000000 !important;
   }
-  
+
   .bg-accent, .bg-secondary, .bg-primary {
     background-color: #000000 !important;
   }
-  
+
   .border-accent, .border-secondary, .border-primary {
     border-color: #000000 !important;
   }
-  
-  /* FORCER ABSOLUMENT TOUT CE QUI PEUT ÊTRE VERT EN NOIR - SAUF dans les matches */
+
   *:not(.match-card *):not(.match-carousel-bg *) {
     color: #000000 !important;
   }
-  
-  /* Exception pour les cartes et fonds qui doivent rester blancs */
+
   .bg-white, [data-slot="card"], .glass-effect, .match-card {
     background-color: #ffffff !important;
   }
-  
-  /* Exception spéciale pour les cartes de matches */
+
   .match-card * {
     color: revert !important;
   }
-  
-  /* FORCER LE FOND BLANC DES CARTES DE MATCHES */
+
   .match-card,
   .match-card.bg-white,
   div.match-card,
@@ -106,8 +102,7 @@
     background: #ffffff !important;
     background-image: none !important;
   }
-  
-  /* Forcer le fond blanc pour tous les éléments avec bg-white dans les matches */
+
   .match-card .bg-white,
   .match-card div[class*="bg-white"],
   .match-carousel-bg .bg-white {
@@ -115,199 +110,40 @@
     background: #ffffff !important;
     background-image: none !important;
   }
-  
-  /* Forcer le fond gris pour les éléments avec bg-gray dans les matches */
+
   .match-card .bg-gray-50,
   .match-card div[class*="bg-gray-50"] {
     background-color: #f9fafb !important;
     background: #f9fafb !important;
   }
-  
+
   .match-card .bg-gray-100,
   .match-card div[class*="bg-gray-100"] {
     background-color: #f3f4f6 !important;
     background: #f3f4f6 !important;
   }
-  
+
   .match-card .text-black {
     color: #000000 !important;
   }
-  
+
   .match-card .text-white {
     color: #ffffff !important;
   }
-  
+
   .match-card .text-gray-600 {
     color: #4b5563 !important;
   }
-  
+
   .match-card .text-gray-500 {
     color: #6b7280 !important;
   }
-  
+
   .match-card .text-gray-700 {
     color: #374151 !important;
   }
-  
-  /* Exception pour les boutons et éléments spéciaux */
+
   button, .bg-jungle-yellow {
     color: #585858 !important;
   }
-}
-
-/* Effets visuels améliorés */
-.glass-effect {
-  @apply backdrop-blur-xl bg-white/80 border border-gray-200/50;
-  box-shadow: 
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-}
-
-.card-shadow {
-  box-shadow: 
-    0 10px 25px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05),
-    0 0 0 1px rgba(255, 205, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.card-shadow:hover {
-  box-shadow: 
-    0 20px 40px -4px rgba(0, 0, 0, 0.15),
-    0 8px 16px -4px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 205, 0, 0.1);
-  transform: translateY(-2px);
-}
-
-.glow-effect {
-  box-shadow: 
-    0 0 20px rgba(255, 205, 0, 0.3),
-    0 8px 16px rgba(255, 205, 0, 0.2);
-  transition: all 0.3s ease;
-}
-
-.glow-effect:hover {
-  box-shadow: 
-    0 0 30px rgba(255, 205, 0, 0.5),
-    0 12px 24px rgba(255, 205, 0, 0.3);
-  transform: translateY(-1px);
-}
-
-.jungle-gradient {
-  background: linear-gradient(135deg, #FFCD00 0%, #f7c500 50%, #585858 100%);
-}
-
-.jungle-gradient-bg {
-  background: linear-gradient(135deg, 
-    rgba(255, 205, 0, 0.1) 0%, 
-    rgba(255, 205, 0, 0.05) 25%,
-    rgba(248, 248, 248, 0.8) 50%,
-    rgba(88, 88, 88, 0.05) 75%,
-    rgba(88, 88, 88, 0.1) 100%);
-}
-
-.typing-effect {
-  overflow: hidden;
-  border-right: 2px solid #FFCD00;
-  white-space: nowrap;
-  animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
-}
-
-.button-shadow {
-  box-shadow: 
-    0 4px 14px 0 rgba(255, 205, 0, 0.39),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  transition: all 0.3s ease;
-}
-
-.button-shadow:hover {
-  box-shadow: 
-    0 6px 20px 0 rgba(255, 205, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  transform: translateY(-1px);
-}
-
-.subtle-shadow {
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    0 1px 4px rgba(0, 0, 0, 0.04);
-}
-
-.floating-element {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0px); 
-  }
-  50% { 
-    transform: translateY(-10px); 
-  }
-}
-
-@keyframes blink-caret {
-  from,
-  to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: #FFCD00;
-  }
-}
-
-@keyframes typing {
-  0% { width: 0; }
-  100% { width: 100%; }
-}
-
-/* Amélioration des scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #FFCD00;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #e6b800;
-}
-
-/* Styles spéciaux pour les boutons de match */
-.match-button-pass {
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.match-button-pass:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
-}
-
-.match-button-info {
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(255, 205, 0, 0.3);
-}
-
-.match-button-info:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 205, 0, 0.5);
-}
-
-.match-button-like {
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(88, 88, 88, 0.3);
-}
-
-.match-button-like:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
