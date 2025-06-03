@@ -485,9 +485,9 @@ export function MatchCarousel() {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-center mt-2 p-2 bg-green-50 border border-green-200 rounded"
+                      className="text-center mt-2 p-2 bg-gray-50 border border-gray-200 rounded"
                     >
-                      <p className="text-green-700 font-body text-xs">
+                      <p className="text-black font-body text-xs">
                         🎉 {t.matches.welcomeMessage.replace('{groupName}', currentGroup.name)}
                       </p>
                     </motion.div>
@@ -505,7 +505,7 @@ export function MatchCarousel() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center flex-shrink-0"
           >
-            <Card className="glass-effect border-green-200">
+            <Card className="glass-effect border-gray-200">
               <CardContent className="p-2">
                 <h3 className="text-sm font-heading text-jungle-gray mb-1">
                   🎊 {t.matches.yourGroups} ({joinedGroups.length})
@@ -514,7 +514,7 @@ export function MatchCarousel() {
                   {joinedGroups.map(groupId => {
                     const group = groups.find(g => g.id === groupId)
                     return group ? (
-                      <Badge key={groupId} className="bg-green-100 text-green-700 border border-green-300 font-body text-xs px-1 py-0">
+                      <Badge key={groupId} className="bg-gray-100 text-black border border-gray-300 font-body text-xs px-1 py-0">
                         {group.emoji} {group.name}
                       </Badge>
                     ) : null

@@ -6,20 +6,20 @@
 
 @layer base {
   :root {
-    --background: 255 255 255; /* Fond blanc */
+    --background: 255 230 102; /* Fond jaune équilibré */
     --foreground: 88 88 88; /* Texte gris foncé */
     --card: 255 255 255; /* Cartes blanches */
     --card-foreground: 88 88 88; /* Texte des cartes en gris */
     --popover: 255 255 255;
     --popover-foreground: 88 88 88;
-    --primary: 255 205 0; /* #FFCD00 Welcome to the Jungle */
+    --primary: 0 0 0; /* Noir au lieu de jaune */
     --primary-foreground: 88 88 88; /* #585858 Welcome to the Jungle */
-    --secondary: 88 88 88; /* #585858 Welcome to the Jungle */
+    --secondary: 0 0 0; /* #000000 noir au lieu de gris */
     --secondary-foreground: 255 255 255;
     --muted: 248 248 248; /* Gris très clair */
     --muted-foreground: 88 88 88;
-    --accent: 255 205 0; /* #FFCD00 Welcome to the Jungle */
-    --accent-foreground: 88 88 88; /* #585858 Welcome to the Jungle */
+    --accent: 0 0 0; /* #000000 noir au lieu de jaune */
+    --accent-foreground: 255 255 255; /* Blanc pour contraste */
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
     --border: 229 229 229; /* Bordures grises claires */
@@ -33,9 +33,20 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-gradient-to-br from-gray-50 to-white text-jungle-gray font-work-sans;
-    background-attachment: fixed;
+  
+  /* FOND JAUNE ÉQUILIBRÉ PARTOUT */
+  html, body {
+    background-color: #FFE666 !important;
+    background-image: none !important;
+    background: #FFE666 !important;
+    color: #585858;
+    font-family: 'Work Sans', sans-serif;
+  }
+  
+  /* Supprimer tous les dégradés sur les divs de fond */
+  .min-h-screen, .fixed.inset-0 {
+    background: #FFE666 !important;
+    background-image: none !important;
   }
   
   /* Typographie Welcome to the Jungle */
@@ -45,6 +56,24 @@
   
   p, span, div, a, button {
     @apply font-work-sans;
+  }
+  
+  /* Forcer tous les titres de cartes en noir */
+  [data-slot="card-title"] {
+    color: #000000 !important;
+  }
+  
+  /* Forcer TOUTES les couleurs accent, secondary et primary en noir */
+  .text-accent, .text-secondary, .text-primary {
+    color: #000000 !important;
+  }
+  
+  .bg-accent, .bg-secondary, .bg-primary {
+    background-color: #000000 !important;
+  }
+  
+  .border-accent, .border-secondary, .border-primary {
+    border-color: #000000 !important;
   }
 }
 

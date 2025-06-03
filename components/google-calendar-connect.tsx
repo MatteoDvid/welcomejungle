@@ -174,8 +174,8 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
             <div className="flex items-center gap-2">
               {isConnected ? (
                 <>
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span className="text-sm font-body text-green-600">
+                  <CheckCircle className="w-4 h-4 text-black" />
+                  <span className="text-sm font-body text-black">
                     {language === 'fr' ? 'Connecté' : 'Connected'}
                   </span>
                 </>
@@ -258,13 +258,13 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
 
       {/* Events Summary */}
       {isConnected && events.length > 0 && (
-        <Card className="glass-effect border-green-200">
+        <Card className="glass-effect border-gray-200">
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-heading text-jungle-gray">
                 📅 {language === 'fr' ? 'Événements de la semaine' : 'This Week\'s Events'}
               </h3>
-              <Badge className="bg-green-100 text-green-700 border border-green-300 font-body text-xs">
+              <Badge className="bg-gray-100 text-black border border-gray-300 font-body text-xs">
                 {events.length} {language === 'fr' ? 'événements' : 'events'}
               </Badge>
             </div>

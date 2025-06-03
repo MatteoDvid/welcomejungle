@@ -62,7 +62,7 @@ export function WeeklyCalendar() {
   const availableGroups: GroupFilter[] = [
     { id: 'coffee', name: 'Coffee Culture Club', color: 'bg-yellow-500', members: ['Emma', 'Sarah', 'Mike'] },
     { id: 'fitness', name: 'Fitness Squad', color: 'bg-red-500', members: ['Lisa', 'David', 'Maria'] },
-    { id: 'lunch', name: 'Lunch Bunch', color: 'bg-green-500', members: ['Tom', 'Jenny', 'Carlos'] },
+    { id: 'lunch', name: 'Lunch Bunch', color: 'bg-black', members: ['Tom', 'Jenny', 'Carlos'] },
     { id: 'ux', name: 'UX Team', color: 'bg-purple-500', members: ['Emma', 'Sarah'] },
     { id: 'dev', name: 'Dev Team', color: 'bg-blue-500', members: ['Tom', 'Mike', 'Alex'] }
   ]
@@ -146,7 +146,7 @@ export function WeeklyCalendar() {
         title: "Lunch & Learn",
         startTime: "12:30",
         endTime: "13:30", 
-        color: "bg-green-500",
+        color: "bg-black",
         date: new Date(currentWeekStart.getTime() + 2*24*60*60*1000).toISOString().split('T')[0],
         type: "learning",
         attendees: ["Tom", "Jenny", "Carlos"],
@@ -370,7 +370,7 @@ export function WeeklyCalendar() {
 
               {/* Statut de connexion */}
               <div className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`} />
+                <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-black' : 'bg-red-500'}`} />
                 <span className="text-xs text-gray-500">
                   {isConnected ? 'Google Calendar' : 'Déconnecté'}
                 </span>
@@ -400,7 +400,7 @@ export function WeeklyCalendar() {
                   variant={userPresenceToday === 'present' ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => handlePresenceUpdate('present')}
-                  className={`flex flex-col gap-1 h-auto py-2 ${userPresenceToday === 'present' ? 'bg-green-600 hover:bg-green-700' : ''}`}
+                  className={`flex flex-col gap-1 h-auto py-2 ${userPresenceToday === 'present' ? 'bg-black hover:bg-gray-800' : ''}`}
                 >
                   <Building2 className="w-4 h-4" />
                   <span className="text-xs">{t.present}</span>
@@ -431,7 +431,7 @@ export function WeeklyCalendar() {
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-sm flex items-center gap-2">
-                <Users className="w-4 h-4 text-green-600" />
+                <Users className="w-4 h-4 text-black" />
                 {t.whoIsHere}
               </CardTitle>
             </CardHeader>
@@ -439,7 +439,7 @@ export function WeeklyCalendar() {
               {/* Au bureau */}
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <Building2 className="w-4 h-4 text-green-600" />
+                  <Building2 className="w-4 h-4 text-black" />
                   <span className="text-sm font-medium">{t.office}</span>
                   <Badge variant="secondary" className="text-xs">
                     {getPresentUsers().length}
@@ -449,7 +449,7 @@ export function WeeklyCalendar() {
                   {getPresentUsers().map((user, index) => (
                     <div key={index} className="flex items-center gap-2">
                       <Avatar className="w-6 h-6">
-                        <AvatarFallback className="text-xs bg-green-100 text-green-800">
+                        <AvatarFallback className="text-xs bg-gray-100 text-black">
                           {user.userName.split(' ').map(n => n[0]).join('')}
                         </AvatarFallback>
                       </Avatar>

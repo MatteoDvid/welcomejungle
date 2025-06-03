@@ -35,7 +35,7 @@ const config: Config = {
           background: "#ffffff",
           accent: "#FFCD00",
           blue: "#585858",
-          green: "#2a9d8f",
+          green: "#000000",
           cream: "#f9f6f1",
           textDark: "#585858",
           textLight: "#585858",
@@ -43,16 +43,16 @@ const config: Config = {
           gray: "#585858",
         },
         primary: {
-          DEFAULT: "#FFCD00",
-          foreground: "#585858",
+          DEFAULT: "#000000",
+          foreground: "#ffffff",
         },
         secondary: {
-          DEFAULT: "#585858",
+          DEFAULT: "#000000",
           foreground: "#ffffff",
         },
         accent: {
-          DEFAULT: "#FFCD00",
-          foreground: "#585858",
+          DEFAULT: "#000000",
+          foreground: "#ffffff",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",

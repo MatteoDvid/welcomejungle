@@ -61,7 +61,7 @@ export function SlackNotifications() {
   return (
     <div className="min-h-screen p-4 md:p-6 bg-jungle-background">
       {/* Background Effects */}
-      <div className="fixed inset-0 bg-gradient-to-br from-jungle-accent/5 via-transparent to-jungle-green/5 pointer-events-none" />
+      <div className="fixed inset-0 bg-gradient-to-br from-jungle-accent/5 via-transparent to-black/5 pointer-events-none" />
 
       <div className="max-w-4xl mx-auto space-y-6 relative z-10">
         {/* Header */}
@@ -81,7 +81,7 @@ export function SlackNotifications() {
                 </div>
                 <Badge
                   variant={isConnected ? "default" : "destructive"}
-                  className={isConnected ? "bg-jungle-green text-white" : ""}
+                  className={isConnected ? "bg-black text-white" : ""}
                 >
                   {isConnected ? "Connected" : "Disconnected"}
                 </Badge>
@@ -92,10 +92,10 @@ export function SlackNotifications() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center justify-between p-4 rounded-lg bg-jungle-green/10 border border-jungle-green/30"
+                  className="flex items-center justify-between p-4 rounded-lg bg-black/10 border border-black/30"
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-jungle-green rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
                       <Check className="w-5 h-5 text-white" />
                     </div>
                     <div>
@@ -304,11 +304,11 @@ export function SlackNotifications() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="p-4 rounded-lg bg-jungle-green/10 border border-jungle-green/30"
+                    className="p-4 rounded-lg bg-gray-100 border border-gray-300"
                   >
                     <div className="flex items-center">
-                      <Check className="w-5 h-5 text-jungle-green mr-2" />
-                      <span className="text-jungle-green font-medium">Test message sent successfully!</span>
+                      <Check className="w-5 h-5 text-black mr-2" />
+                      <span className="text-black font-medium">Test message sent successfully!</span>
                     </div>
                     <p className="text-sm text-jungle-textLight/70 mt-1">
                       Check your Slack workspace for the notification

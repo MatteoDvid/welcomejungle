@@ -48,7 +48,7 @@ export default function DemoPage() {
           {/* Info sur les rôles */}
           <Card className="glass-effect border-white/20">
             <CardHeader>
-              <CardTitle className="text-2xl text-jungle-green flex items-center gap-2">
+              <CardTitle className="text-2xl text-black flex items-center gap-2">
                 <Users className="w-6 h-6" />
                 Rôles avec profils
               </CardTitle>
@@ -63,7 +63,7 @@ export default function DemoPage() {
                   <p className="text-sm text-jungle-textLight/70">Profil + Matches</p>
                 </div>
                 <div className="p-4 bg-white/5 rounded-lg">
-                  <h3 className="font-semibold text-jungle-green mb-2">✅ Managers</h3>
+                  <h3 className="font-semibold text-black mb-2">✅ Managers</h3>
                   <p className="text-sm text-jungle-textLight/70">Profil + Admin</p>
                 </div>
                 <div className="p-4 bg-white/5 rounded-lg">

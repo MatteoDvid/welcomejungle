@@ -178,12 +178,12 @@ export function MatchInterface() {
           >
             🎉
           </motion.div>
-          <h2 className="text-4xl font-bold text-primary mb-4">Match Made!</h2>
+          <h2 className="text-4xl font-bold text-black mb-4">Match Made!</h2>
           <p className="text-xl text-muted-foreground mb-6">You've joined "{matchedActivity}"</p>
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
-            className="text-primary"
+            className="text-black"
           >
             <Sparkles className="w-12 h-12 mx-auto" />
           </motion.div>
@@ -197,7 +197,7 @@ export function MatchInterface() {
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="glass-effect border-white/20 text-center p-8">
           <div className="text-6xl mb-4">🎯</div>
-          <h2 className="text-2xl font-bold text-primary mb-2">No More Matches</h2>
+          <h2 className="text-2xl font-bold text-black mb-2">No More Matches</h2>
           <p className="text-muted-foreground">Check back later for new connection opportunities!</p>
         </Card>
       </div>
@@ -226,7 +226,7 @@ export function MatchInterface() {
                     {currentMatch.activityEmoji}
                   </motion.div>
                 </div>
-                <CardTitle className="text-2xl text-primary mb-2">{currentMatch.suggestedActivity}</CardTitle>
+                <CardTitle className="text-2xl text-black mb-2">{currentMatch.suggestedActivity}</CardTitle>
                 <div className="flex items-center justify-center text-sm text-muted-foreground space-x-4">
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
@@ -243,7 +243,7 @@ export function MatchInterface() {
                 {/* Members */}
                 <div>
                   <div className="flex items-center mb-3">
-                    <Users className="w-4 h-4 mr-2 text-primary" />
+                    <Users className="w-4 h-4 mr-2 text-black" />
                     <span className="text-sm font-medium">Who's joining ({currentMatch.members.length})</span>
                   </div>
                   <div className="space-y-3">
@@ -283,7 +283,7 @@ export function MatchInterface() {
                 {/* Shared Interests */}
                 <div>
                   <div className="flex items-center mb-3">
-                    <Sparkles className="w-4 h-4 mr-2 text-primary" />
+                    <Sparkles className="w-4 h-4 mr-2 text-black" />
                     <span className="text-sm font-medium">Shared interests</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -291,7 +291,7 @@ export function MatchInterface() {
                       <Badge
                         key={interest}
                         variant="secondary"
-                        className="bg-primary/20 text-primary border-primary/30"
+                        className="bg-black/20 text-black border-black/30"
                       >
                         {getInterestEmoji(interest)} {interest}
                       </Badge>

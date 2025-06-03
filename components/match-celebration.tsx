@@ -44,13 +44,13 @@ export function MatchCelebration({ show, onComplete, matchedUser }: MatchCelebra
           ...defaults,
           particleCount,
           origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-          colors: ['#ffc857', '#2a9d8f', '#3a506b'],
+          colors: ['#ffc857', '#000000', '#3a506b'],
         });
         confetti({
           ...defaults,
           particleCount,
           origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-          colors: ['#ffc857', '#2a9d8f', '#3a506b'],
+          colors: ['#ffc857', '#000000', '#3a506b'],
         });
       }, 250);
 

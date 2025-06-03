@@ -167,13 +167,13 @@ export function CalendarView() {
   const getEventTypeColor = (type: string) => {
     switch (type) {
       case "match":
-        return "bg-primary/20 text-primary border-primary/30"
+        return "bg-black/20 text-black border-black/30"
       case "meeting":
-        return "bg-secondary/20 text-secondary border-secondary/30"
+        return "bg-black/20 text-black border-black/30"
       case "social":
-        return "bg-accent/20 text-accent border-accent/30"
+        return "bg-black/20 text-black border-black/30"
       default:
-        return "bg-white/10 text-foreground border-white/20"
+        return "bg-black/20 text-black border-black/30"
     }
   }
 
@@ -201,16 +201,16 @@ export function CalendarView() {
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-primary mb-2">Your Week at the Office 📅</h1>
+          <h1 className="text-4xl font-bold text-black mb-2">Your Week at the Office 📅</h1>
           <p className="text-muted-foreground">Plan your presence and discover who else is around</p>
         </motion.div>
 
         {/* Week Overview */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-          <Card className="glass-effect border-white/20">
+          <Card className="glass-effect border-black/20">
             <CardHeader>
               <CardTitle className="flex items-center">
-                <Calendar className="w-5 h-5 mr-2 text-primary" />
+                <Calendar className="w-5 h-5 mr-2 text-black" />
                 Week of December 18-22, 2023
               </CardTitle>
             </CardHeader>
@@ -223,10 +223,10 @@ export function CalendarView() {
                     whileTap={{ scale: 0.98 }}
                     className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
                       selectedDay === index
-                        ? "border-primary bg-primary/10 glow-effect"
+                        ? "border-black bg-black/10 glow-effect"
                         : day.isToday
-                          ? "border-accent bg-accent/10"
-                          : "border-white/20 bg-white/5 hover:bg-white/10"
+                          ? "border-black bg-black/10"
+                          : "border-black/20 bg-black/5 hover:bg-black/10"
                     }`}
                     onClick={() => setSelectedDay(index)}
                   >
@@ -246,7 +246,7 @@ export function CalendarView() {
                         <Switch
                           checked={day.yourPresence}
                           onCheckedChange={() => togglePresence(index)}
-                          className="data-[state=checked]:bg-primary"
+                          className="data-[state=checked]:bg-black"
                         />
                         <span className="text-xs">{day.yourPresence ? "In office" : "Remote"}</span>
                       </div>
@@ -254,8 +254,8 @@ export function CalendarView() {
                       {/* Colleague Count */}
                       {day.yourPresence && (
                         <div className="flex items-center justify-center space-x-1">
-                          <Users className="w-3 h-3 text-primary" />
-                          <span className="text-xs text-primary font-medium">{day.colleagues.length} colleagues</span>
+                          <Users className="w-3 h-3 text-black" />
+                          <span className="text-xs text-black font-medium">{day.colleagues.length} colleagues</span>
                         </div>
                       )}
 
@@ -279,10 +279,10 @@ export function CalendarView() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Colleagues Present */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-            <Card className="glass-effect border-white/20 h-fit">
+            <Card className="glass-effect border-black/20 h-fit">
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Users className="w-5 h-5 mr-2 text-primary" />
+                  <Users className="w-5 h-5 mr-2 text-black" />
                   Who's in the office - {selectedDayData.day}
                 </CardTitle>
               </CardHeader>
@@ -296,11 +296,11 @@ export function CalendarView() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.1 }}
-                          className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                          className="flex items-center space-x-3 p-3 rounded-lg bg-black/5 hover:bg-black/10 transition-colors"
                         >
-                          <Avatar className="w-10 h-10 ring-2 ring-primary/30">
+                          <Avatar className="w-10 h-10 ring-2 ring-black/30">
                             <AvatarImage src={colleague.avatar || "/placeholder.svg"} />
-                            <AvatarFallback className="bg-primary text-text-dark">
+                            <AvatarFallback className="bg-black text-text-dark">
                               {colleague.name
                                 .split(" ")
                                 .map((n) => n[0])
@@ -335,7 +335,7 @@ export function CalendarView() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="mt-3 border-primary text-primary hover:bg-primary hover:text-text-dark"
+                      className="mt-3 border-black text-black hover:bg-black hover:text-white"
                       onClick={() => togglePresence(selectedDay)}
                     >
                       Switch to office
@@ -348,17 +348,17 @@ export function CalendarView() {
 
           {/* Events & Matches */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-            <Card className="glass-effect border-white/20 h-fit">
+            <Card className="glass-effect border-black/20 h-fit">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <Clock className="w-5 h-5 mr-2 text-primary" />
+                    <Clock className="w-5 h-5 mr-2 text-black" />
                     Events & Matches
                   </div>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="border-primary text-primary hover:bg-primary hover:text-text-dark"
+                    className="border-black text-black hover:bg-black hover:text-white"
                   >
                     <Plus className="w-4 h-4 mr-1" />
                     Add Event
@@ -374,7 +374,7 @@ export function CalendarView() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
+                        className="p-4 rounded-lg bg-black/5 hover:bg-black/10 transition-colors border border-black/10"
                       >
                         <div className="flex items-start justify-between mb-2">
                           <h4 className="font-medium">{event.title}</h4>

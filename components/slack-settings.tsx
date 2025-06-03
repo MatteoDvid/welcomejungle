@@ -57,7 +57,7 @@ export function SlackSettings() {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-primary mb-2">Slack Integration ⚡</h1>
+          <h1 className="text-4xl font-bold text-black mb-2">Slack Integration ⚡</h1>
           <p className="text-muted-foreground">Stay connected with your office matches and reminders</p>
         </motion.div>
 
@@ -67,12 +67,12 @@ export function SlackSettings() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <Slack className="w-6 h-6 mr-2 text-primary" />
+                  <Slack className="w-6 h-6 mr-2 text-black" />
                   Slack Connection
                 </div>
                 <Badge
                   variant={isConnected ? "default" : "destructive"}
-                  className={isConnected ? "bg-accent text-white" : ""}
+                  className={isConnected ? "bg-black text-white" : ""}
                 >
                   {isConnected ? "Connected" : "Disconnected"}
                 </Badge>
@@ -80,9 +80,9 @@ export function SlackSettings() {
             </CardHeader>
             <CardContent>
               {isConnected ? (
-                <div className="flex items-center justify-between p-4 rounded-lg bg-accent/10 border border-accent/30">
+                <div className="flex items-center justify-between p-4 rounded-lg bg-black/10 border border-black/30">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
                       <Check className="w-5 h-5 text-white" />
                     </div>
                     <div>
@@ -120,14 +120,14 @@ export function SlackSettings() {
             <Card className="glass-effect border-white/20">
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Bell className="w-5 h-5 mr-2 text-primary" />
+                  <Bell className="w-5 h-5 mr-2 text-black" />
                   Notification Preferences
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10">
+                    <div className="flex items-center justify-between p-4 rounded-lg bg-black/10 border border-black/30">
                       <div className="space-y-1">
                         <Label className="text-base font-medium">Daily Presence Reminders</Label>
                         <p className="text-sm text-muted-foreground">Get reminded to update your office presence</p>
@@ -139,7 +139,7 @@ export function SlackSettings() {
                       />
                     </div>
 
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10">
+                    <div className="flex items-center justify-between p-4 rounded-lg bg-black/10 border border-black/30">
                       <div className="space-y-1">
                         <Label className="text-base font-medium">Match Notifications</Label>
                         <p className="text-sm text-muted-foreground">Get notified when you have new matches</p>
@@ -153,7 +153,7 @@ export function SlackSettings() {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10">
+                    <div className="flex items-center justify-between p-4 rounded-lg bg-black/10 border border-black/30">
                       <div className="space-y-1">
                         <Label className="text-base font-medium">Event Reminders</Label>
                         <p className="text-sm text-muted-foreground">Get reminded about upcoming events and meetups</p>
@@ -165,7 +165,7 @@ export function SlackSettings() {
                       />
                     </div>
 
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10">
+                    <div className="flex items-center justify-between p-4 rounded-lg bg-black/10 border border-black/30">
                       <div className="space-y-1">
                         <Label className="text-base font-medium">Weekly Digest</Label>
                         <p className="text-sm text-muted-foreground">
@@ -191,7 +191,7 @@ export function SlackSettings() {
             <Card className="glass-effect border-white/20">
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <MessageSquare className="w-5 h-5 mr-2 text-primary" />
+                  <MessageSquare className="w-5 h-5 mr-2 text-black" />
                   Test Notifications
                 </CardTitle>
               </CardHeader>
@@ -211,7 +211,7 @@ export function SlackSettings() {
 
                 <div className="flex items-center justify-between p-4 rounded-lg bg-primary/10 border border-primary/30">
                   <div>
-                    <p className="font-medium text-primary">Send Test Notification</p>
+                    <p className="font-medium text-black">Send Test Notification</p>
                     <p className="text-sm text-muted-foreground">
                       This will send a test message to your Slack to verify the integration
                     </p>
@@ -243,11 +243,11 @@ export function SlackSettings() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="p-4 rounded-lg bg-accent/10 border border-accent/30"
+                    className="p-4 rounded-lg bg-black/10 border border-black/30"
                   >
                     <div className="flex items-center">
-                      <Check className="w-5 h-5 text-accent mr-2" />
-                      <span className="text-accent font-medium">Test message sent successfully!</span>
+                      <Check className="w-5 h-5 text-black mr-2" />
+                      <span className="text-black font-medium">Test message sent successfully!</span>
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">
                       Check your Slack workspace for the notification

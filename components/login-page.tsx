@@ -44,7 +44,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       icon: Users,
       emoji: "👥",
       description: "Manage your team activities",
-      color: "bg-green-500",
+      color: "bg-black",
       demo: { email: "tom@jungle.com", password: "jungle123" }
     },
     {
