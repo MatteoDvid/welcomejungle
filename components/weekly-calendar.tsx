@@ -57,6 +57,7 @@ export function WeeklyCalendar() {
   const [showOnlyMyGroups, setShowOnlyMyGroups] = useState(false)
   const [userPresenceToday, setUserPresenceToday] = useState<'present' | 'remote' | 'absent'>('absent')
   const [isConnected, setIsConnected] = useState(false)
+  const [groupEvents, setGroupEvents] = useState<CalendarEvent[]>([])
 
   const availableGroups: GroupFilter[] = [
     { id: 'coffee', name: 'Coffee Culture Club', color: 'bg-yellow-500', members: ['Emma', 'Sarah', 'Mike'] },
@@ -108,6 +109,26 @@ export function WeeklyCalendar() {
     return days
   }
 
+  const addGroupEvent = () => {
+    const today = new Date().toISOString().split('T')[0]
+    const randomGroup = Math.random() > 0.5 ? 'Sport' : 'Tech'
+    const color = randomGroup === 'Sport' ? 'bg-red-500' : 'bg-purple-500'
+  
+    const newEvent: CalendarEvent = {
+      id: `group-${Date.now()}`,
+      title: `Événement ${randomGroup}`,
+      startTime: '12:00',
+      endTime: '13:00',
+      color: color,
+      date: today,
+      type: 'group',
+      attendees: ['Moi', randomGroup],
+      location: randomGroup === 'Sport' ? 'Salle de sport' : 'Salle Tech'
+    }
+  
+    setGroupEvents((prev) => [...prev, newEvent])
+  }
+  
   const getDemoEvents = (): CalendarEvent[] => {
     const today = currentWeekStart.toISOString().split('T')[0]
     return [
@@ -231,10 +252,14 @@ export function WeeklyCalendar() {
     setSelectedDate(newDate)
   }
 
-  const allEvents = [...getDemoEvents()]
-  if (myPresenceEvent) {
-    allEvents.push(myPresenceEvent)
-  }
+const allEvents = [...getDemoEvents()]
+if (myPresenceEvent) {
+  allEvents.push(myPresenceEvent)
+}
+if (groupEvents.length > 0) {
+  allEvents.push(...groupEvents)
+}
+
     const weekDays = generateWeekDays(currentWeekStart)
   const timeSlots = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"]
 
@@ -344,7 +369,13 @@ export function WeeklyCalendar() {
       <div className="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Sidebar gauche */}
         <div className="space-y-4">
-          <GoogleCalendarConnect onEventsUpdate={setGoogleEvents} />
+        <GoogleCalendarConnect
+  onEventsUpdate={setGoogleEvents}
+  onAddPresence={() => addMyPresenceToday('present')}
+  onAddGroupEvent={addGroupEvent}
+/>
+
+
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-sm flex items-center gap-2">

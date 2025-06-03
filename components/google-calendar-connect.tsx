@@ -11,9 +11,15 @@ import { useLanguage } from "@/contexts/LanguageContext"
 
 interface GoogleCalendarConnectProps {
   onEventsUpdate?: (events: GoogleCalendarEvent[]) => void
+  onAddPresence?: () => void
+  onAddGroupEvent?: () => void
 }
 
-export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectProps) {
+export function GoogleCalendarConnect({
+  onEventsUpdate,
+  onAddPresence,
+  onAddGroupEvent
+}: GoogleCalendarConnectProps) {
   const { t, language } = useLanguage()
   const [isConnected, setIsConnected] = useState(false)
   const [isConnecting, setIsConnecting] = useState(false)
@@ -36,7 +42,6 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
       }
     } catch (error) {
       console.error('Error checking Google Calendar connection:', error)
-      // Mode démo
       setIsConnected(true)
       await loadDemoEvents()
     }
@@ -53,7 +58,6 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
       }
     } catch (error) {
       console.error('Error connecting to Google Calendar:', error)
-      // Mode démo - simuler la connexion
       setIsConnected(true)
       await loadDemoEvents()
     } finally {
@@ -77,7 +81,7 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
     setIsSyncing(true)
     try {
       const startDate = new Date()
-      startDate.setDate(startDate.getDate() - startDate.getDay()) // Début de la semaine
+      startDate.setDate(startDate.getDate() - startDate.getDay())
       
       const weekEvents = await GoogleCalendar.getWeekEvents(startDate)
       setEvents(weekEvents)
@@ -108,42 +112,6 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
     }
   }
 
-  const createDemoPresence = async () => {
-    const today = new Date().toISOString().split('T')[0]
-    const success = await GoogleCalendar.createPresenceEvent({
-      userId: 'demo-user',
-      userEmail: 'user@jungle.com',
-      userName: 'Demo User',
-      date: today,
-      status: 'present',
-      location: 'Office - Floor 2',
-      notes: 'Working on Office Pulse Match project'
-    })
-
-    if (success) {
-      await syncEvents()
-    }
-  }
-
-  const createDemoGroupEvent = async () => {
-    const tomorrow = new Date()
-    tomorrow.setDate(tomorrow.getDate() + 1)
-    const date = tomorrow.toISOString().split('T')[0]
-    
-    const success = await GoogleCalendar.createGroupEvent(
-      'Coffee Culture Club',
-      'Weekly Coffee Meetup',
-      date,
-      '15:00',
-      ['sarah@jungle.com', 'mike@jungle.com', 'emma@jungle.com'],
-      'Lobby Café'
-    )
-
-    if (success) {
-      await syncEvents()
-    }
-  }
-
   const formatLastSync = () => {
     if (!lastSync) return 'Never'
     
@@ -169,7 +137,6 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Connection Status */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               {isConnected ? (
@@ -223,7 +190,6 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
             )}
           </div>
 
-          {/* Sync Status */}
           {isConnected && (
             <div className="flex items-center justify-between pt-2 border-t border-gray-200">
               <div className="text-xs text-jungle-gray/60 font-body">
@@ -256,43 +222,6 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
         </CardContent>
       </Card>
 
-      {/* Events Summary */}
-      {isConnected && events.length > 0 && (
-        <Card className="glass-effect border-green-200">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-heading text-jungle-gray">
-                📅 {language === 'fr' ? 'Événements de la semaine' : 'This Week\'s Events'}
-              </h3>
-              <Badge className="bg-green-100 text-green-700 border border-green-300 font-body text-xs">
-                {events.length} {language === 'fr' ? 'événements' : 'events'}
-              </Badge>
-            </div>
-            
-            <div className="space-y-2 max-h-32 overflow-y-auto">
-              {events.slice(0, 3).map((event) => (
-                <div key={event.id} className="flex items-center gap-2 p-2 bg-gray-50 rounded text-xs">
-                  <div className="w-2 h-2 bg-jungle-yellow rounded-full flex-shrink-0"></div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-body font-semibold text-jungle-gray truncate">{event.title}</p>
-                    <p className="text-jungle-gray/60 font-body">{event.location}</p>
-                  </div>
-                  <div className="text-jungle-gray/50 font-body text-xs">
-                    {event.attendees?.length || 0} {language === 'fr' ? 'pers.' : 'people'}
-                  </div>
-                </div>
-              ))}
-              {events.length > 3 && (
-                <p className="text-xs text-jungle-gray/60 text-center font-body">
-                  +{events.length - 3} {language === 'fr' ? 'autres événements' : 'more events'}
-                </p>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Demo Actions */}
       {isConnected && (
         <Card className="glass-effect border-blue-200">
           <CardContent className="p-4">
@@ -303,7 +232,7 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
               <Button
                 variant="outline"
                 size="sm"
-                onClick={createDemoPresence}
+                onClick={() => onAddPresence?.()}
                 className="w-full border-blue-300 text-blue-600 hover:bg-blue-50 font-body text-xs"
               >
                 <Users className="w-3 h-3 mr-2" />
@@ -312,7 +241,7 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
               <Button
                 variant="outline"
                 size="sm"
-                onClick={createDemoGroupEvent}
+                onClick={() => onAddGroupEvent?.()}
                 className="w-full border-blue-300 text-blue-600 hover:bg-blue-50 font-body text-xs"
               >
                 <Calendar className="w-3 h-3 mr-2" />
@@ -324,4 +253,4 @@ export function GoogleCalendarConnect({ onEventsUpdate }: GoogleCalendarConnectP
       )}
     </div>
   )
-} 
+}
