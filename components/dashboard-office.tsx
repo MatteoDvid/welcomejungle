@@ -19,34 +19,34 @@ import {
 
 export function DashboardOffice() {
   const { user, logout } = useAuth()
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   const stats = [
     {
-      title: "Espaces",
+      title: language === 'fr' ? "Espaces" : "Spaces",
       value: "24",
-      subtitle: "zones gérées",
+      subtitle: language === 'fr' ? "zones gérées" : "managed areas",
       icon: Building2,
       color: "bg-blue-500"
     },
     {
-      title: "Événements",
+      title: language === 'fr' ? "Événements" : "Events",
       value: "12",
-      subtitle: "cette semaine",
+      subtitle: language === 'fr' ? "cette semaine" : "this week",
       icon: Calendar,
       color: "bg-black"
     },
     {
-      title: "Participants",
+      title: language === 'fr' ? "Participants" : "Participants",
       value: "89",
-      subtitle: "moyens/événement",
+      subtitle: language === 'fr' ? "moyens/événement" : "avg/event",
       icon: Users,
       color: "bg-purple-500"
     },
     {
-      title: "Satisfaction",
+      title: language === 'fr' ? "Satisfaction" : "Satisfaction",
       value: "4.7",
-      subtitle: "note moyenne",
+      subtitle: language === 'fr' ? "note moyenne" : "average rating",
       icon: Activity,
       color: "bg-orange-500"
     }
@@ -56,22 +56,22 @@ export function DashboardOffice() {
     {
       title: "Coffee & Connect",
       time: "09:00",
-      date: "Aujourd'hui",
-      location: "Cafétéria",
+      date: language === 'fr' ? "Aujourd'hui" : "Today",
+      location: language === 'fr' ? "Cafétéria" : "Cafeteria",
       attendees: 25
     },
     {
-      title: "Yoga Session",
+      title: language === 'fr' ? "Yoga Session" : "Yoga Session",
       time: "18:00",
-      date: "Aujourd'hui",
-      location: "Salle Zen",
+      date: language === 'fr' ? "Aujourd'hui" : "Today",
+      location: language === 'fr' ? "Salle Zen" : "Zen Room",
       attendees: 15
     },
     {
-      title: "Team Lunch",
+      title: language === 'fr' ? "Team Lunch" : "Team Lunch",
       time: "12:30",
-      date: "Demain",
-      location: "Terrasse",
+      date: language === 'fr' ? "Demain" : "Tomorrow",
+      location: language === 'fr' ? "Terrasse" : "Terrace",
       attendees: 40
     }
   ]
@@ -87,9 +87,9 @@ export function DashboardOffice() {
                 <Building2 className="w-5 h-5 text-jungle-gray" />
               </div>
               <div>
-                <h1 className="text-2xl font-heading text-jungle-gray">Dashboard Office</h1>
+                <h1 className="text-2xl font-heading text-jungle-gray">{t.dashboard.office.title}</h1>
                 <p className="text-jungle-gray/70 font-body">
-                  Bienvenue, {user?.name || user?.firstName}
+                  {t.dashboard.welcome.replace('{name}', user?.name || user?.firstName || '')}
                 </p>
               </div>
             </div>
@@ -98,7 +98,7 @@ export function DashboardOffice() {
               variant="outline"
               className="border-jungle-yellow text-jungle-yellow hover:bg-jungle-yellow hover:text-jungle-gray"
             >
-              Déconnexion
+              {t.nav.logout}
             </Button>
           </div>
         </div>

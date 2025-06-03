@@ -581,8 +581,8 @@ export function ModernProfileCreator() {
                         onClick={() => setProfileData(prev => ({ ...prev, workStyle: option.id }))}
                         className={`p-3 rounded-lg border-2 transition-colors text-left ${
                           profileData.workStyle === option.id
-                            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                            : 'border-gray-200 dark:border-gray-600 hover:border-gray-300'
+                            ? 'border-jungle-yellow bg-jungle-yellow/10 dark:bg-jungle-yellow/5'
+                            : 'border-gray-200 dark:border-gray-600 hover:border-jungle-yellow/50'
                         }`}
                       >
                         <div className="text-2xl mb-1">{option.emoji}</div>

@@ -95,8 +95,12 @@ export function SlackNotifications() {
                   className="flex items-center justify-between p-4 rounded-lg bg-black/10 border border-black/30"
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
-                      <Check className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-jungle-yellow rounded-lg flex items-center justify-center">
+                      <img 
+                        src="/wttj-logo.png" 
+                        alt="Connected" 
+                        className="w-6 h-6 object-contain"
+                      />
                     </div>
                     <div>
                       <p className="font-medium text-jungle-textLight">Connected to Slack</p>

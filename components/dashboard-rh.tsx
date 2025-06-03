@@ -19,34 +19,34 @@ import {
 
 export function DashboardRH() {
   const { user, logout } = useAuth()
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   const stats = [
     {
-      title: "Employés",
+      title: language === 'fr' ? "Employés" : "Employees",
       value: "156",
-      subtitle: "total entreprise",
+      subtitle: language === 'fr' ? "total entreprise" : "company total",
       icon: Users,
       color: "bg-blue-500"
     },
     {
-      title: "Activité",
+      title: language === 'fr' ? "Activité" : "Activity",
       value: "92%",
-      subtitle: "taux d'engagement",
+      subtitle: language === 'fr' ? "taux d'engagement" : "engagement rate",
       icon: Activity,
       color: "bg-black"
     },
     {
       title: "Matches",
       value: "243",
-      subtitle: "ce mois-ci",
+      subtitle: language === 'fr' ? "ce mois-ci" : "this month",
       icon: UserCheck,
       color: "bg-purple-500"
     },
     {
-      title: "Événements",
+      title: language === 'fr' ? "Événements" : "Events",
       value: "18",
-      subtitle: "planifiés",
+      subtitle: language === 'fr' ? "planifiés" : "scheduled",
       icon: Calendar,
       color: "bg-orange-500"
     }
@@ -54,20 +54,20 @@ export function DashboardRH() {
 
   const insights = [
     {
-      title: "Équipes les plus actives",
+      title: language === 'fr' ? "Équipes les plus actives" : "Most active teams",
       subtitle: "Tech, Marketing, Sales",
       trend: "+15%",
       positive: true
     },
     {
-      title: "Nouvelles connexions",
-      subtitle: "87 cette semaine",
+      title: language === 'fr' ? "Nouvelles connexions" : "New connections",
+      subtitle: language === 'fr' ? "87 cette semaine" : "87 this week",
       trend: "+22%",
       positive: true
     },
     {
-      title: "Satisfaction globale",
-      subtitle: "4.6/5 moyenne",
+      title: language === 'fr' ? "Satisfaction globale" : "Overall satisfaction",
+      subtitle: language === 'fr' ? "4.6/5 moyenne" : "4.6/5 average",
       trend: "+0.3",
       positive: true
     }
@@ -84,9 +84,9 @@ export function DashboardRH() {
                 <Shield className="w-5 h-5 text-jungle-gray" />
               </div>
               <div>
-                <h1 className="text-2xl font-heading text-jungle-gray">Dashboard RH</h1>
+                <h1 className="text-2xl font-heading text-jungle-gray">{t.dashboard.hr.title}</h1>
                 <p className="text-jungle-gray/70 font-body">
-                  Bienvenue, {user?.name || user?.firstName}
+                  {t.dashboard.welcome.replace('{name}', user?.name || user?.firstName || '')}
                 </p>
               </div>
             </div>
@@ -95,7 +95,7 @@ export function DashboardRH() {
               variant="outline"
               className="border-jungle-yellow text-jungle-yellow hover:bg-jungle-yellow hover:text-jungle-gray"
             >
-              Déconnexion
+              {t.nav.logout}
             </Button>
           </div>
         </div>

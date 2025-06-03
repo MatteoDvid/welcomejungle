@@ -227,7 +227,7 @@ export function ModernMatchInterface() {
         showSearch={true}
       />
 
-      <div className="container mx-auto px-4 py-8 max-w-md">
+      <div className="container mx-auto px-4 py-8 max-w-lg">
         
         {/* Stats Header */}
         <div className="flex justify-between items-center mb-6">
@@ -301,7 +301,7 @@ export function ModernMatchInterface() {
         </AnimatePresence>
 
         {/* Card Stack */}
-        <div className="relative h-[600px] mb-6">
+        <div className="relative h-[650px] mb-6">
           {!hasMoreCards ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -504,7 +504,7 @@ export function ModernMatchInterface() {
                 variant="outline"
                 size="lg"
                 onClick={handlePass}
-                className="w-16 h-16 rounded-full border-2 border-gray-300 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                className="w-16 h-16 rounded-full border-2 border-gray-300 hover:border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 match-button-pass"
               >
                 <X className="w-6 h-6 text-gray-600 hover:text-red-500" />
               </Button>
@@ -514,9 +514,9 @@ export function ModernMatchInterface() {
               <Button
                 size="lg"
                 onClick={() => {}}
-                className="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600"
+                className="w-16 h-16 rounded-full bg-jungle-yellow text-jungle-gray hover:bg-jungle-yellow/90 match-button-info"
               >
-                <Info className="w-6 h-6 text-white" />
+                <Info className="w-6 h-6" />
               </Button>
             </motion.div>
 
@@ -524,7 +524,7 @@ export function ModernMatchInterface() {
               <Button
                 size="lg"
                 onClick={handleLike}
-                className="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 shadow-lg shadow-pink-500/30"
+                className="w-16 h-16 rounded-full bg-gradient-to-r from-jungle-gray to-black hover:from-black hover:to-jungle-gray match-button-like"
               >
                 <Heart className="w-6 h-6 text-white" />
               </Button>

@@ -199,7 +199,7 @@ export function MatchInterface() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-md">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentMatch.id}
@@ -303,7 +303,7 @@ export function MatchInterface() {
                     >
                       <Button
                         variant="outline"
-                        className="w-full h-16 text-2xl border-2 border-gray-300 text-gray-600 hover:bg-gray-100 hover:border-gray-400 rounded-2xl"
+                        className="w-full h-16 text-2xl border-2 border-gray-300 text-gray-600 hover:bg-red-50 hover:border-red-300 hover:text-red-500 rounded-2xl transition-all duration-200"
                         onClick={handleSkip}
                       >
                         <X className="w-6 h-6" />
@@ -316,7 +316,7 @@ export function MatchInterface() {
                       whileHover={{ scale: 1.02 }}
                     >
                       <Button
-                        className="w-full h-16 text-2xl bg-black text-white hover:bg-gray-800 rounded-2xl shadow-lg border-0"
+                        className="w-full h-16 text-2xl bg-gradient-to-r from-jungle-yellow to-yellow-400 text-jungle-gray hover:from-yellow-400 hover:to-jungle-yellow rounded-2xl shadow-lg border-0 font-bold transition-all duration-200"
                         onClick={handleJoin}
                       >
                         <Heart className="w-6 h-6 mr-2" />

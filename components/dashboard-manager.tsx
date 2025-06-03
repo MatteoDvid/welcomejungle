@@ -18,34 +18,34 @@ import {
 
 export function DashboardManager() {
   const { user, logout } = useAuth()
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   const stats = [
     {
-      title: "Équipe",
+      title: language === 'fr' ? "Équipe" : "Team",
       value: "12",
-      subtitle: "membres actifs",
+      subtitle: language === 'fr' ? "membres actifs" : "active members",
       icon: Users,
       color: "bg-blue-500"
     },
     {
-      title: "Activités",
+      title: language === 'fr' ? "Activités" : "Activities",
       value: "8",
-      subtitle: "cette semaine",
+      subtitle: language === 'fr' ? "cette semaine" : "this week",
       icon: Activity,
       color: "bg-black"
     },
     {
-      title: "Engagement",
+      title: language === 'fr' ? "Engagement" : "Engagement",
       value: "85%",
-      subtitle: "participation",
+      subtitle: language === 'fr' ? "participation" : "participation",
       icon: TrendingUp,
       color: "bg-purple-500"
     },
     {
-      title: "Réunions",
+      title: language === 'fr' ? "Réunions" : "Meetings",
       value: "15",
-      subtitle: "planifiées",
+      subtitle: language === 'fr' ? "planifiées" : "scheduled",
       icon: Calendar,
       color: "bg-orange-500"
     }
@@ -53,21 +53,21 @@ export function DashboardManager() {
 
   const upcomingActivities = [
     {
-      title: "Réunion d'équipe",
+      title: language === 'fr' ? "Réunion d'équipe" : "Team Meeting",
       time: "14:00",
-      date: "Aujourd'hui",
+      date: language === 'fr' ? "Aujourd'hui" : "Today",
       participants: 12
     },
     {
-      title: "Workshop Innovation",
+      title: language === 'fr' ? "Workshop Innovation" : "Innovation Workshop",
       time: "10:00",
-      date: "Demain",
+      date: language === 'fr' ? "Demain" : "Tomorrow",
       participants: 8
     },
     {
-      title: "Team Building",
+      title: language === 'fr' ? "Team Building" : "Team Building",
       time: "16:00",
-      date: "Vendredi",
+      date: language === 'fr' ? "Vendredi" : "Friday",
       participants: 15
     }
   ]
@@ -83,9 +83,9 @@ export function DashboardManager() {
                 <div className="text-xl">🌿</div>
               </div>
               <div>
-                <h1 className="text-2xl font-heading text-jungle-gray">Dashboard Manager</h1>
+                <h1 className="text-2xl font-heading text-jungle-gray">{t.dashboard.manager.title}</h1>
                 <p className="text-jungle-gray/70 font-body">
-                  Bienvenue, {user?.name || user?.firstName}
+                  {t.dashboard.welcome.replace('{name}', user?.name || user?.firstName || '')}
                 </p>
               </div>
             </div>
@@ -94,7 +94,7 @@ export function DashboardManager() {
               variant="outline"
               className="border-jungle-yellow text-jungle-yellow hover:bg-jungle-yellow hover:text-jungle-gray"
             >
-              Déconnexion
+              {t.nav.logout}
             </Button>
           </div>
         </div>

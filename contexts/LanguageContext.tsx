@@ -30,12 +30,13 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setLanguage = (lang: Language) => {
-    console.log('🔄 LANGUAGE CHANGE:', lang);
+    console.log('🔄 LANGUAGE CHANGE FROM:', language, 'TO:', lang);
     setLanguageState(lang);
     try {
       localStorage.setItem('language', lang);
+      console.log('✅ Language saved to localStorage:', lang);
     } catch (error) {
-      console.log('Error saving language to localStorage');
+      console.log('❌ Error saving language to localStorage:', error);
     }
   };
 
@@ -45,6 +46,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     t: translations[language],
     toggleLanguage: () => {
       const newLanguage = language === 'en' ? 'fr' : 'en'
+      console.log('🚀 TOGGLE LANGUAGE:', language, '->', newLanguage);
       setLanguage(newLanguage)
     },
   };

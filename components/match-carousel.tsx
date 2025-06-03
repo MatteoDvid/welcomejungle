@@ -96,7 +96,7 @@ export function MatchCarousel() {
       description: "Get pumped together 💪",
       activity: "fitness",
       emoji: "💪",
-      color: "from-green-400 to-blue-500",
+      color: "from-emerald-400 to-teal-500",
       vibe: "High Energy",
       matchPercentage: 88,
       nextMeeting: "Friday 18:00 - Office Gym",
@@ -129,7 +129,7 @@ export function MatchCarousel() {
       description: "Food adventures await 🍽️",
       activity: "lunch",
       emoji: "🍽️",
-      color: "from-purple-400 to-pink-500",
+      color: "from-rose-400 to-orange-400",
       vibe: "Foodie Fun",
       matchPercentage: 85,
       nextMeeting: "Wednesday 12:30 - Italian Corner",
@@ -162,7 +162,7 @@ export function MatchCarousel() {
       description: "Level up together 🎮",
       activity: "gaming",
       emoji: "🎮",
-      color: "from-indigo-400 to-purple-600",
+      color: "from-slate-500 to-gray-600",
       vibe: "Epic Gaming",
       matchPercentage: 90,
       nextMeeting: "Thursday 19:00 - Gaming Lounge",
@@ -231,8 +231,8 @@ export function MatchCarousel() {
 
   if (showSuccess) {
     return (
-      <div className="min-h-screen p-3 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 match-carousel-bg">
-        <div className="max-w-xs mx-auto h-[80vh] flex items-center justify-center">
+      <div className="min-h-screen p-3 bg-gradient-to-br from-yellow-50 via-white to-orange-50 match-carousel-bg">
+        <div className="max-w-sm mx-auto h-[85vh] flex items-center justify-center">
           <motion.div 
             initial={{ scale: 0, opacity: 0 }} 
             animate={{ scale: 1, opacity: 1 }} 
@@ -305,8 +305,8 @@ export function MatchCarousel() {
   }
 
   return (
-    <div className="min-h-screen p-3 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 match-carousel-bg">
-      <div className="max-w-xs mx-auto h-[80vh] flex flex-col">
+    <div className="min-h-screen p-3 bg-gradient-to-br from-yellow-50 via-white to-orange-50 match-carousel-bg">
+      <div className="max-w-sm mx-auto h-[85vh] flex flex-col">
         
         {/* Header moderne - très compact */}
         <motion.div 
@@ -526,11 +526,11 @@ export function MatchCarousel() {
                         <button
                           className="w-full h-12 text-sm rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-2"
                           style={{
-                            backgroundColor: '#3b82f6',
-                            background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-                            color: '#ffffff',
+                            backgroundColor: '#FFCD00',
+                            background: 'linear-gradient(135deg, #FFCD00 0%, #f7c500 100%)',
+                            color: '#585858',
                             border: 'none',
-                            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)'
+                            boxShadow: '0 4px 12px rgba(255, 205, 0, 0.4)'
                           }}
                           onClick={handleJoinGroup}
                           disabled={isAnimating || joinedGroups.includes(currentGroup.id)}

@@ -83,13 +83,20 @@ export function ModernHeader({
               whileTap={{ scale: 0.95 }}
               className="flex items-center space-x-2"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white text-sm font-bold">OP</span>
+              <div className="w-8 h-8 bg-jungle-yellow rounded-xl flex items-center justify-center shadow-lg">
+                <img 
+                  src="/wttj-logo.png" 
+                  alt="Welcome to the Jungle" 
+                  className="w-6 h-6 object-contain"
+                />
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-lg font-bold text-gray-900 dark:text-white">
-                  Office Pulse
+                  {language === 'fr' ? 'Office Pulse 🇫🇷' : 'Office Pulse 🇬🇧'}
                 </h1>
+                <p className="text-xs text-gray-500">
+                  {t.nav.profile} | {t.nav.matches} | {t.common.loading}
+                </p>
               </div>
             </motion.div>
             
@@ -171,10 +178,16 @@ export function ModernHeader({
                 size="sm"
                 className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
               >
-                <Bell className="w-4 h-4" />
+                <div className="w-5 h-5 relative bg-jungle-yellow rounded-sm flex items-center justify-center">
+                  <img 
+                    src="/wttj-logo.png" 
+                    alt="Notifications" 
+                    className="w-3 h-3 object-contain"
+                  />
+                </div>
                 <Badge 
                   variant="destructive" 
-                  className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs"
+                  className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs bg-red-500 text-white border-0 animate-pulse"
                 >
                   3
                 </Badge>
