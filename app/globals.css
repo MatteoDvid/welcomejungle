@@ -7,24 +7,24 @@
 @layer base {
   :root {
     --background: 255 255 255; /* Fond blanc */
-    --foreground: 88 88 88; /* Texte gris foncé */
+    --foreground: 0 0 0; /* Texte noir */
     --card: 255 255 255; /* Cartes blanches */
-    --card-foreground: 88 88 88; /* Texte des cartes en gris */
+    --card-foreground: 0 0 0; /* Texte des cartes en noir */
     --popover: 255 255 255;
-    --popover-foreground: 88 88 88;
+    --popover-foreground: 0 0 0;
     --primary: 255 205 0; /* #FFCD00 Welcome to the Jungle */
-    --primary-foreground: 88 88 88; /* #585858 Welcome to the Jungle */
-    --secondary: 88 88 88; /* #585858 Welcome to the Jungle */
+    --primary-foreground: 0 0 0;
+    --secondary: 0 0 0;
     --secondary-foreground: 255 255 255;
-    --muted: 248 248 248; /* Gris très clair */
-    --muted-foreground: 0 0% 10%;
-    --accent: 255 205 0; /* #FFCD00 Welcome to the Jungle */
-    --accent-foreground: 88 88 88; /* #585858 Welcome to the Jungle */
+    --muted: 248 248 248;
+    --muted-foreground: 0 0 0;
+    --accent: 255 205 0;
+    --accent-foreground: 0 0 0;
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
-    --border: 229 229 229; /* Bordures grises claires */
-    --input: 248 248 248; /* Inputs gris très clair */
-    --ring: 255 205 0; /* #FFCD00 Welcome to the Jungle */
+    --border: 229 229 229;
+    --input: 248 248 248;
+    --ring: 255 205 0;
     --radius: 0.75rem;
   }
 }
@@ -32,19 +32,23 @@
 @layer base {
   * {
     @apply border-border;
+    color: #000000; /* force noir partout */
   }
   body {
-    @apply bg-gradient-to-br from-gray-50 to-white text-jungle-gray font-work-sans;
+    @apply bg-gradient-to-br from-gray-50 to-white font-work-sans;
     background-attachment: fixed;
+    color: #000000; /* texte body noir */
   }
   
   /* Typographie Welcome to the Jungle */
   h1, h2, h3, h4, h5, h6 {
     @apply font-welcome;
+    color: #000000; /* titres noirs */
   }
   
   p, span, div, a, button {
     @apply font-work-sans;
+    color: #000000; /* textes divers noirs */
   }
 }
 
