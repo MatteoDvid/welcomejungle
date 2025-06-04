@@ -20,11 +20,11 @@ function MatchesContent() {
     }
 
     // Only employees can access matches after profile creation
-    if (!isLoading && user && user.role !== "Employé") {
+    if (!isLoading && user && user.role !== "employee") {
       const route = {
-        "Manager": "/dashboard-manager",
-        "RH": "/dashboard-rh",
-        "Office Manager": "/dashboard-office"
+        "manager": "/dashboard-manager",
+        "hr": "/dashboard-rh",
+        "office_manager": "/dashboard-office"
       }[user.role] || "/login"
       
       router.push(route)
@@ -42,7 +42,7 @@ function MatchesContent() {
     )
   }
 
-  if (!user || user.role !== "Employé") {
+  if (!user || user.role !== "employee") {
     return null // Will redirect
   }
 

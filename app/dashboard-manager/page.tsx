@@ -19,12 +19,12 @@ function DashboardManagerContent() {
       return
     }
 
-    if (!isLoading && user && user.role !== "Manager") {
+    if (!isLoading && user && user.role !== "manager") {
       // Redirect non-managers to appropriate routes
       const route = {
-        "Employé": "/create-profile",
-        "RH": "/dashboard-rh", 
-        "Office Manager": "/dashboard-office"
+        "employee": "/create-profile",
+        "hr": "/dashboard-rh", 
+        "office_manager": "/dashboard-office"
       }[user.role] || "/login"
       
       router.push(route)
@@ -42,7 +42,7 @@ function DashboardManagerContent() {
     )
   }
 
-  if (!user || user.role !== "Manager") {
+  if (!user || user.role !== "manager") {
     return null // Will redirect
   }
 
