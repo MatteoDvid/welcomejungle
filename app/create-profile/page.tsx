@@ -19,12 +19,12 @@ function CreateProfileContent() {
       return
     }
 
-    if (!isLoading && user && user.role !== "Employé") {
+    if (!isLoading && user && user.role !== "employee") {
       // Redirect non-employees to their appropriate dashboard
       const route = {
-        "Manager": "/dashboard-manager",
-        "RH": "/dashboard-rh", 
-        "Office Manager": "/dashboard-office"
+        "manager": "/dashboard-manager",
+        "hr": "/dashboard-rh",
+        "office_manager": "/dashboard-office"
       }[user.role] || "/login"
       
       router.push(route)
@@ -42,7 +42,7 @@ function CreateProfileContent() {
     )
   }
 
-  if (!user || user.role !== "Employé") {
+  if (!user || user.role !== "employee") {
     return null // Will redirect
   }
 

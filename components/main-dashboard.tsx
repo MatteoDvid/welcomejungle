@@ -29,11 +29,11 @@ export function MainDashboard({ initialPage = "profile" }: MainDashboardProps) {
 
   const getUserRole = () => {
     switch (user.role) {
-      case "Manager":
+      case "manager":
         return "manager"
-      case "RH":
+      case "hr":
         return "hr"
-      case "Office Manager":
+      case "office_manager":
         return "office_manager"
       default:
         return "employee"
@@ -51,15 +51,15 @@ export function MainDashboard({ initialPage = "profile" }: MainDashboardProps) {
       case "notifications":
         return <SlackNotifications />
       case "dashboard":
-        if (user.role === "Manager") return <DashboardManager />
-        if (user.role === "RH") return <DashboardRH />
-        if (user.role === "Office Manager") return <DashboardOffice />
+        if (user.role === "manager") return <DashboardManager />
+        if (user.role === "hr") return <DashboardRH />
+        if (user.role === "office_manager") return <DashboardOffice />
         return <MatchCarousel />
       case "team":
         return <WeeklyCalendar />
       case "admin":
-        if (user.role === "RH") return <DashboardRH />
-        if (user.role === "Office Manager") return <DashboardOffice />
+        if (user.role === "hr") return <DashboardRH />
+        if (user.role === "office_manager") return <DashboardOffice />
         return <DashboardManager />
       default:
         return <ProfileCreationForm />
