@@ -95,3 +95,81 @@ La liste complète des dépendances et de leurs versions exactes se trouve dans 
 ---
 
 Ce README a pour but de fournir un point de départ. N'hésitez pas à le compléter avec des informations plus spécifiques à mesure que le projet évolue.
+
+# Documentation Technique – Projet Tribe (Welcome to the Jungle) - Hackathon
+
+✨ **Introduction**
+
+Ce document présente l'architecture fonctionnelle et technique de l'écosystème Tribe, une plateforme hybride combinant une application web interne (Office Pulse, décrite ci-dessus) et une suite d'assistants IA intégrés à Slack. L'objectif est de fluidifier la gestion des présences, d'encourager les connexions humaines et de donner aux RH, managers et plus tard à l'office manager, des outils d'analyse et d'action adaptés.
+
+⚙️ **Cartographie fonctionnelle**
+
+🔶 **Application Tribe (Interface Web - Office Pulse)**
+
+*   **Accès collaborateur :**
+    *   Formulaire de création de profil : email, nom complet, poste
+    *   Déclaration des jours de présence habituels, préférences d'ambiance, passions
+    *   Choix des groupes et centres d'intérêt souhaités pour se connecter avec les autres
+    *   Stockage des données : toutes les réponses sont centralisées dans Google Sheets (Tribe Pulse)
+*   **Fonctionnalités RH / Manager (et bientôt Office Manager) :**
+    *   Dashboards de visualisation personnalisés (ex. : répartition des présences, matching projets/interactions, suivi culturel)
+    *   Accès aux données enrichies pour l'analyse d'équipe, la proposition de formations ou d'évolutions
+
+🟡 **Slack (Interface conversationnelle)**
+
+*   Interactions dans Slack (répondre aux collaborateurs, créer du lien, informer RH/managers)
+*   **Assistants IA Dust connectés à Slack :**
+    *   `Tribe-bot` : répond aux questions culturelles, propose des moments de cohésion, recommande des jours de présence
+    *   `Tribe-groups-bot` : crée des groupes Slack selon les centres d'intérêt, ajoute automatiquement les membres selon la base
+    *   `Tribe-presence-bot` : suit les présences via la GSheet mise à jour par Make, répond aux questions "Qui vient demain ?"
+*   **Automatisations via Make :**
+    *   Envoi quotidien à 18h d'un message Slack demandant la présence du lendemain
+    *   Mise à jour automatique de la colonne "Presence Tomorrow" dans Tribe Pulse
+
+🧩 **Guide d'installation et de configuration (Écosystème Slack/IA)**
+
+*   **Prérequis**
+    *   Un espace Slack (accès admin)
+    *   Un compte Dust (https://dust.tt)
+    *   Un compte Make (anciennement Integromat)
+    *   Une Google Sheet structurée (nommée "Tribe Pulse" dans ce contexte)
+*   **Étapes principales**
+    1.  Créer les 3 assistants sur Dust avec leurs prompts respectifs.
+    2.  Connecter chaque agent à Slack (via "Channels" dans Dust).
+    3.  Ajouter la Google Sheet "Tribe Pulse" comme source de données dans Dust.
+    4.  Automatiser la collecte des présences via Make (créer un scénario pour envoyer un message Slack et pusher les réponses dans la Google Sheet chaque soir).
+
+🔌 **Documentation des API / Intégrations (Écosystème Slack/IA)**
+
+*   **Make**
+    *   Slack → Make → Google Sheets
+    *   Message automatique envoyé à 18h à chaque employé.
+    *   Réponses centralisées dans la colonne "Presence Tomorrow" de la Google Sheet.
+*   **Dust → Google Sheets**
+    *   Lecture seule de la base "Tribe Pulse" : Nom, Poste, Slack ID/Email, Présence, Groupes, Affinités, Projets, Centres d'intérêt, etc.
+*   **Slack (via Dust)**
+    *   Les agents peuvent être sollicités dans tous les canaux où ils sont invités.
+    *   Capables d'agir en DM ou en public (selon le type de requête et la configuration de l'agent).
+
+🏛️ **Architecture technique (Schéma simplifié de l'écosystème)**
+
+```mermaid
+graph TD
+    Utilisateur["Utilisateur Collaborateur"] -- Interaction --> SlackInterface["Interface Slack"]
+    SlackInterface -- Question/Commande IA --> DustAgents["Assistants IA Dust (bots)"]
+    SlackInterface -- Réponse Présence (via Make) --> Make["Make.com"]
+    Make -- Mise à jour Présence Quotidienne --> GoogleSheet["Google Sheets (Tribe Pulse)"]
+    DustAgents -- Lecture Données --> GoogleSheet
+    OfficePulseApp["Application Web Office Pulse (Next.js)"] -- Lecture/Écriture Données Profil & Match --> GoogleSheet
+    Utilisateur -- Interaction (Profil, Matchs) --> OfficePulseApp
+    RHManager["RH / Manager"] -- Dashboards & Analyse --> OfficePulseApp
+```
+
+*Légende : Les flèches indiquent le flux principal d'interaction ou de données.*
+
+🔄 **Maintenance & évolutions (Écosystème Slack/IA)**
+
+*   Vérification hebdomadaire de la cohérence des colonnes de la Google Sheet "Tribe Pulse".
+*   Mise à jour des prompts des assistants Dust si les besoins ou les sources de données évoluent.
+*   Ajout des nouveaux collaborateurs : Processus à définir (via le formulaire de l'application Office Pulse, ajout manuel à la GSheet, synchronisation depuis un SIRH via Make, etc.).
+*   Ajout futur de dashboards pour l'office manager dans l'application Office Pulse.

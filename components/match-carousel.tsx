@@ -18,10 +18,6 @@ interface GroupMember {
   officeDays: string[]
 }
 
-interface MatchCarouselProps {
-  userEmail: string;
-}
-
 interface MatchGroup {
   id: string
   name: string
@@ -35,17 +31,8 @@ interface MatchGroup {
   vibe: string
 }
 
-export function MatchCarousel({ userEmail: initialUserEmail }: MatchCarouselProps) {
-  // !!!!! DÉBUT DU HACK POUR LA DÉMO !!!!!
-  // Forcer userEmail à "emma@jungle.com" si initialUserEmail est undefined.
-  // À RETIRER APRÈS LA DÉMO ET CORRIGER LE FLUX DE PROPS NORMAL.
-  const userEmail = initialUserEmail || "emma@jungle.com";
-  if (!initialUserEmail) {
-    console.warn(`[MatchCarousel HACK] initialUserEmail was undefined. Using demo placeholder: ${userEmail}`);
-  }
-  // !!!!! FIN DU HACK POUR LA DÉMO !!!!!
-
-  const { /* t, */ language } = useLanguage()
+export function MatchCarousel() {
+  const { t, language } = useLanguage()
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0)
   const [joinedGroups, setJoinedGroups] = useState<string[]>([])
   const [isAnimating, setIsAnimating] = useState(false)
@@ -194,7 +181,7 @@ export function MatchCarousel({ userEmail: initialUserEmail }: MatchCarouselProp
 
   const currentGroup = groups[currentGroupIndex]
 
-  const handleJoinGroup = async () => {
+  const handleJoinGroup = () => {
     if (joinedGroups.includes(currentGroup.id)) return
 
     setIsAnimating(true)
@@ -207,79 +194,16 @@ export function MatchCarousel({ userEmail: initialUserEmail }: MatchCarouselProp
       colors: ['#FFE666', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4']
     })
 
-    // ---- START: Appel API pour mettre à jour Google Sheets ----
-    try {
-      const groupName = currentGroup.name;
-      console.log(`[MatchCarousel] User '${userEmail}' joining group '${groupName}'. Attempting API call.`);
-
-      const response = await fetch('/api/update-user-match', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userEmail, groupName }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        console.log('[MatchCarousel] Successfully updated match info in Google Sheets:', result.data);
-        // Procéder avec l'UI après succès de l'API
-        setTimeout(() => {
-          setJoinedGroups([...joinedGroups, currentGroup.id])
-          setShowSuccess(true)
-          setIsAnimating(false)
-          
-          setTimeout(() => {
-            setShowSuccess(false)
-            handleNext()
-          }, 2500) // Temps d'affichage du succès
-        }, 300) // Petit délai pour que l'animation de confetti soit visible
-      } else {
-        console.error('[MatchCarousel] Failed to update match info in Google Sheets:', result.error, result.details);
-        setIsAnimating(false); 
-        // Remplacer les guillemets doubles par des simples pour l'alerte
-        const errorMessageForAlert = (typeof result.error === 'string' ? result.error.replace(/"/g, "'") : 'Erreur inconnue');
-        alert(`Erreur lors de la mise à jour de votre groupe : ${errorMessageForAlert}`);
-         // Fallback pour continuer le flux UI si l'API échoue, ou commenter les lignes ci-dessous pour bloquer
-        setTimeout(() => {
-          setJoinedGroups([...joinedGroups, currentGroup.id]) // On peut choisir de le faire quand même
-          setShowSuccess(true) // ou pas, selon la politique de gestion d'erreur
-          setIsAnimating(false)
-          setTimeout(() => {
-            setShowSuccess(false)
-            handleNext()
-          }, 2500)
-        }, 300)
-      }
-    } catch (error) {
-      console.error('[MatchCarousel] Error calling /api/update-user-match:', error);
-      setIsAnimating(false); // Arrêter l'animation de chargement en cas d'erreur réseau
-      alert(`Une erreur réseau est survenue en tentant de rejoindre le groupe.`);
-       // Fallback pour continuer le flux UI si l'API échoue
+    setTimeout(() => {
+      setJoinedGroups([...joinedGroups, currentGroup.id])
+      setShowSuccess(true)
+      setIsAnimating(false)
+      
       setTimeout(() => {
-        setJoinedGroups([...joinedGroups, currentGroup.id])
-        setShowSuccess(true)
-        setIsAnimating(false)
-        setTimeout(() => {
-          setShowSuccess(false)
-          handleNext()
-        }, 2500)
-      }, 300)
-    }
-    // ---- END: Appel API ----
-
-    // La logique UI originale est maintenant dans le bloc `if (response.ok)` ou dans les catch/else
-    // setTimeout(() => {
-    //   setJoinedGroups([...joinedGroups, currentGroup.id])
-    //   setShowSuccess(true)
-    //   setIsAnimating(false)
-    //   
-    //   setTimeout(() => {
-    //     setShowSuccess(false)
-    //     handleNext()
-    //   }, 2500)
-    // }, 500)
+        setShowSuccess(false)
+        handleNext()
+      }, 2500)
+    }, 500)
   }
 
   const handleNext = () => {
@@ -332,7 +256,7 @@ export function MatchCarousel({ userEmail: initialUserEmail }: MatchCarouselProp
                 Welcome to
               </p>
               <p className="text-xl font-bold" style={{color: '#3b82f6'}}>
-                {currentGroup.name}
+                "{currentGroup.name}"
               </p>
             </motion.div>
             
